@@ -9,53 +9,391 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-black: #1a1a1a;
-            --secondary-black: #2d2d2d;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #6c757d;
-            --border-gray: #dee2e6;
+            --primary-black: #000000;
+            --secondary-black: #333333;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e5e5e5;
+            --dark-gray: #757575;
+            --border-gray: #e0e0e0;
+            --accent-color: #000000;
+            --text-light: #ffffff;
         }
 
         body { 
-            background-color: #f6f7fb; 
-            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
+            background-color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
             color: var(--primary-black);
+            line-height: 1.6;
+        }
+        
+        /* Navbar estilo Pull&Bear */
+        .navbar {
+            border-bottom: 1px solid var(--border-gray);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0.5rem;
+        }
+        
+        .nav-link.active {
+            font-weight: 600;
+        }
+        
+        /* User Dropdown en Navbar */
+        .user-dropdown {
+            position: relative;
+        }
+        
+        .user-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--primary-black);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .user-dropdown-toggle:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-gray);
+        }
+        
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-gray);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-width: 220px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .user-dropdown:hover .user-dropdown-menu {
+            display: block;
+        }
+        
+        .user-dropdown-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .user-dropdown-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--primary-black);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .user-dropdown-item:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .user-dropdown-divider {
+            height: 1px;
+            background-color: var(--border-gray);
+            margin: 0.5rem 0;
+        }
+        
+        /* Profile Header Expandido */
+        .profile-section {
+            background-color: var(--light-gray);
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-gray);
+        }
+        
+        /* Profile Cards en Header */
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-gray);
         }
         
         .profile-card { 
-            border-radius: 12px; 
-            box-shadow: 0 6px 18px rgba(10,10,10,0.06); 
-            border: none; 
+            border-radius: 0; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-gray);
             background: #ffffff;
+            margin-bottom: 0;
+        }
+        
+        .profile-card .card-body {
+            padding: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-gray);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: var(--dark-gray);
+        }
+        
+        /* Product Grid - Estilo Pull&Bear */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
         
         .product-card { 
-            transition: transform .12s ease, box-shadow .12s ease; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
             border: 1px solid var(--border-gray);
             background: #ffffff;
+            position: relative;
+            overflow: hidden;
         }
         
         .product-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 12px 30px rgba(10,10,10,0.08); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08); 
         }
         
-        .text-truncate-3 { 
-            display: -webkit-box; 
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            background: var(--light-gray);
         }
         
+        .product-image img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.03);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: var(--text-light);
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .product-badge.low-stock {
+            background: #d32f2f;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-price {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0;
+            padding: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        
+        .add-to-cart-btn:hover {
+            background: var(--secondary-black);
+        }
+        
+        .add-to-cart-btn:disabled {
+            background: var(--dark-gray);
+            cursor: not-allowed;
+        }
+
+        /* Nuevo botón Ver Detalles */
+        .view-details-btn {
+            width: 100%;
+            background: transparent;
+            color: var(--primary-black);
+            border: 1px solid var(--primary-black);
+            border-radius: 0;
+            padding: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        
+        .view-details-btn:hover {
+            background: var(--primary-black);
+            color: var(--text-light);
+            text-decoration: none;
+        }
+        
+        .stock-info {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            margin-top: 0.25rem;
+        }
+        
+        .stock-low {
+            color: #d32f2f;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            margin: 2rem 0 1.5rem;
+        }
+        
+        .section-header h2 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        
+        /* Buttons */
+        .btn {
+            border-radius: 0;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-dark {
+            border: 1px solid var(--primary-black);
+            color: var(--primary-black);
+            background: transparent;
+        }
+        
+        .btn-outline-dark:hover {
+            background: var(--primary-black);
+            color: var(--text-light);
+        }
+        
+        .btn-dark {
+            background: var(--primary-black);
+            border: 1px solid var(--primary-black);
+            color: var(--text-light);
+        }
+        
+        .btn-dark:hover {
+            background: transparent;
+            color: var(--primary-black);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-black);
+            color: var(--text-light);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Cart Count */
         .cart-count { 
             position: absolute; 
             top: -8px; 
             right: -8px; 
-            background: var(--primary-black); 
+            background: var(--accent-color); 
             color: #fff; 
             width: 20px; 
             height: 20px; 
@@ -66,139 +404,54 @@
             justify-content:center; 
         }
         
-        footer { 
-            background: var(--primary-black); 
-            color: #fff; 
-        }
-
-        /* Estilos del Carrito Modal */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1999;
-            display: none;
-        }
-
-        .cart-modal {
-            position: fixed;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 380px;
-            transform: translateX(100%);
-            transition: transform .25s ease;
-            background: #fff;
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.12);
-        }
-
-        .cart-item {
-            border-bottom: 1px solid var(--border-gray);
-            padding: 1rem 0;
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 0.5rem 0;
-        }
-
-        .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--primary-black);
-            background: transparent;
-            color: var(--primary-black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .quantity-btn:hover {
-            background: var(--primary-black);
-            color: white;
-        }
-
-        .quantity-display {
-            min-width: 40px;
-            text-align: center;
-            padding: 0.25rem;
-            border: 1px solid var(--border-gray);
-            font-weight: 500;
-        }
-
-        /* Botones */
-        .btn {
-            border-radius: 0;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline-dark {
-            border-color: var(--primary-black);
-            color: var(--primary-black);
-            background: transparent;
-        }
-
-        .btn-outline-dark:hover {
-            background: var(--primary-black);
-            color: white;
-            border-color: var(--primary-black);
-        }
-
-        .btn-dark {
-            background: var(--primary-black);
-            border-color: var(--primary-black);
-            color: white;
-        }
-
-        .btn-dark:hover {
-            background: transparent;
-            color: var(--primary-black);
-            border-color: var(--primary-black);
-        }
-
-        .btn-danger {
-            background: transparent;
-            border-color: #dc3545;
-            color: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #dc3545;
-            color: white;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+            
+            .product-image img {
+                height: 280px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .user-dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border: none;
+                border-top: 1px solid var(--border-gray);
+            }
+            
+            .profile-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ url_for('auth.home') }}">FASHION BOUTIQUE</a>
+            <a class="navbar-brand" href="{{ url_for('auth.home') }}">FASHION BOUTIQUE</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item me-2">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.home') }}">Inicio</a>
                     </li>
-                    <li class="nav-item me-2">
+                    <li class="nav-item">
                         <a class="nav-link active" href="{{ url_for('users.profile') }}">Mi Perfil</a>
                     </li>
-                    <li class="nav-item position-relative me-2">
+                    <li class="nav-item position-relative ms-3">
                         <a class="nav-link" href="{{ url_for('cart.view_cart') }}" id="cartButton">
                             <i class="fas fa-shopping-cart"></i>
                         </a>
@@ -206,143 +459,172 @@
                             <span class="cart-count">{{ current_user.get_cart_count() }}</span>
                         {% endif %}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+                    <!-- User Dropdown -->
+                    <li class="nav-item user-dropdown ms-3">
+                        <a href="#" class="user-dropdown-toggle">
+                            <img src="https://ui-avatars.com/api/?name={{ username }}&background=000&color=ffffff&size=32" 
+                                 class="user-avatar-small" 
+                                 alt="{{ username }}">
+                            <span class="d-none d-md-inline">{{ username }}</span>
+                            <i class="fas fa-chevron-down ms-1" style="font-size: 0.8rem;"></i>
+                        </a>
+                        <div class="user-dropdown-menu">
+                            <div class="user-dropdown-header">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name={{ username }}&background=000&color=ffffff&size=40" 
+                                         class="user-avatar-small me-2" 
+                                         alt="{{ username }}">
+                                    <div>
+                                        <div class="fw-bold">{{ username }}</div>
+                                        <small class="text-muted">{{ current_user.emailUser }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ url_for('users.profile') }}" class="user-dropdown-item">
+                                <i class="fas fa-user me-2"></i>Mi Perfil
+                            </a>
+
+                         <a href="{{ url_for('users.user_orders') }}" class="user-dropdown-item">
+            <i class="fas fa-shopping-bag me-2"></i> Ver Mis Pedidos
+        </a>
+       
+                          
+                            <a href="{{ url_for('users.account_info') }}" class="user-dropdown-item">
+                                <i class="fas fa-info-circle me-2"></i>Información de Cuenta
+                            </a>
+                            <a href="{{ url_for('users.edit_profile') }}" class="user-dropdown-item">
+                                <i class="fas fa-edit me-2"></i>Editar Perfil
+                            </a>
+                            <a href="{{ url_for('users.change_password') }}" class="user-dropdown-item">
+                                <i class="fas fa-lock me-2"></i>Cambiar Contraseña
+                            </a>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="{{ url_for('auth.logout') }}" class="user-dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- CONTENIDO -->
-    <div class="container mt-4">
-        <div class="row">
-            <!-- SIDEBAR PERFIL -->
-            <div class="col-lg-4 mb-4">
-                <div class="card profile-card mb-3">
-                    <div class="card-body text-center">
-                        <img src="https://ui-avatars.com/api/?name={{ username }}&background=000&color=ffffff&size=120" class="rounded-circle mb-3" width="110" height="110" alt="avatar">
-                        <h4 class="mb-0">{{ username }}</h4>
-                        <small class="text-muted d-block mb-2">{{ current_user.emailUser }}</small>
-                        <span class="badge bg-success">Cuenta Activa</span>
-
-                        <div class="mt-3 d-grid gap-2">
-                            <a href="{{ url_for('users.edit_profile') }}" class="btn btn-outline-dark btn-sm">
-                                <i class="fas fa-edit me-1"></i>Editar perfil
-                            </a>
-                            <a href="{{ url_for('users.change_password') }}" class="btn btn-outline-dark btn-sm">
-                                <i class="fas fa-lock me-1"></i>Cambiar contraseña
-                            </a>
-                            <a href="{{ url_for('cart.view_cart') }}" class="btn btn-dark btn-sm">
-                                <i class="fas fa-shopping-cart me-1"></i>Ver Carrito
-                                {% if current_user.get_cart_count() > 0 %}
-                                    <span class="badge bg-light text-dark ms-1">{{ current_user.get_cart_count() }}</span>
-                                {% endif %}
-                            </a>
-                        </div>
-                    </div>
+    <!-- PROFILE HEADER EXPANDIDO CON INFORMACIÓN DE CUENTA -->
+    <div class="profile-section">
+        <div class="container">
+            <!-- Información básica del usuario -->
+            <div class="row align-items-center">
+                <div class="col-md-3 text-center text-md-start">
+                    <img src="https://ui-avatars.com/api/?name={{ username }}&background=000&color=ffffff&size=120" class="user-avatar" alt="avatar">
                 </div>
-
-                <div class="card profile-card">
-                    <div class="card-body">
-                        <h6>Información</h6>
-                        <hr>
-                        <p class="mb-1"><i class="fas fa-user me-2"></i><strong>Rol:</strong> {{ role_label }}</p>
-                        <p class="mb-1"><i class="fas fa-envelope me-2"></i><strong>Email:</strong> {{ current_user.emailUser }}</p>
-                        <p class="mb-1"><i class="fas fa-shopping-cart me-2"></i><strong>Productos en carrito:</strong> {{ current_user.get_cart_count() }}</p>
-                        <p class="mb-0"><i class="fas fa-calendar me-2"></i><strong>Miembro desde:</strong>
-                            {% if current_user.created_at %}
-                                {{ current_user.created_at.strftime('%d/%m/%Y') }}
-                            {% else %}
-                                Fecha no disponible
+                <div class="col-md-6 text-center text-md-start">
+                    <h1 class="mb-1">{{ username }}</h1>
+                    <p class="text-muted mb-2">{{ current_user.emailUser }}</p>
+                    <span class="badge bg-dark rounded-0 px-3 py-2">Cuenta Activa</span>
+                </div>
+                <div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="{{ url_for('users.edit_profile') }}" class="btn btn-outline-dark">
+                            <i class="fas fa-edit me-2"></i>Editar perfil
+                        </a>
+                        <a href="{{ url_for('cart.view_cart') }}" class="btn btn-dark mt-2 mt-md-0 ms-md-2">
+                            <i class="fas fa-shopping-cart me-2"></i>Ver Carrito
+                            {% if current_user.get_cart_count() > 0 %}
+                                <span class="badge bg-light text-dark ms-1">{{ current_user.get_cart_count() }}</span>
                             {% endif %}
-                        </p>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- MAIN -->
-            <div class="col-lg-8">
-                <div class="mb-3">
-                    <h3 class="mb-1">Bienvenido, {{ username }} 👋</h3>
-                    <p class="text-muted mb-0">Explora nuestros productos destacados.</p>
-                </div>
 
-                <!-- PRODUCTOS -->
-                <h5 class="mb-3">Productos Destacados</h5>
-                <div class="row" id="products-container">
+    <!-- CONTENIDO PRINCIPAL - SOLO PRODUCTOS -->
+    <div class="container">
+        <div class="row">
+            <!-- SECCIÓN DE PRODUCTOS -->
+            <div class="col-12">
+                <div class="section-header">
+                    <h2>Productos Destacados</h2>
+                </div>
+                
+                <div class="product-grid" id="products-container">
                     {% if products and products|length > 0 %}
                         {% for product in products %}
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card product-card h-100">
+                        <div class="product-card">
+                            <div class="product-image">
                                 <img src="{{ product.image or product.image_url or 'https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}" 
-                                     class="card-img-top" 
-                                     alt="{{ product.nameProduct or product.name }}" 
-                                     style="height:260px; object-fit:cover;"
+                                     alt="{{ product.nameProduct or product.name }}"
                                      onerror="this.src='https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title mb-1">{{ product.nameProduct or product.name }}</h6>
-                                    <p class="card-text text-muted mb-2 text-truncate-3" style="font-size:0.92rem;">
-                                        {{ product.description or 'Producto de calidad premium' }}
-                                    </p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <span class="fw-bold">${{ '%.2f'|format(product.price) }}</span>
-                                            <small class="d-block text-muted">
-                                                Stock: {{ product.stock }}
-                                                {% if product.stock <= 0 %}
-                                                    <span class="text-danger">(Agotado)</span>
-                                                {% endif %}
-                                            </small>
-                                        </div>
-                                        <button class="btn btn-sm btn-outline-dark add-to-cart"
-                                                data-id="{{ product.idProduct if product.idProduct is defined else product.id }}"
-                                                data-name="{{ product.nameProduct or product.name }}"
-                                                data-price="{{ product.price }}"
-                                                data-stock="{{ product.stock }}"
-                                                {% if product.stock <= 0 %}disabled{% endif %}>
-                                            <i class="fas fa-cart-plus me-1"></i>
-                                            {% if product.stock <= 0 %}Agotado{% else %}Agregar{% endif %}
-                                        </button>
-                                    </div>
+                                {% if product.stock <= 5 and product.stock > 0 %}
+                                    <div class="product-badge low-stock">Últimas unidades</div>
+                                {% elif product.stock <= 0 %}
+                                    <div class="product-badge low-stock">Agotado</div>
+                                {% endif %}
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">{{ product.nameProduct or product.name }}</div>
+                                <div class="product-price">${{ '%.2f'|format(product.price) }}</div>
+                                <div class="stock-info {% if product.stock <= 5 and product.stock > 0 %}stock-low{% endif %}">
+                                    {% if product.stock > 5 %}
+                                        En stock
+                                    {% elif product.stock <= 5 and product.stock > 0 %}
+                                        Solo {{ product.stock }} disponibles
+                                    {% else %}
+                                        Agotado
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Botones de acción -->
+                                <div class="action-buttons">
+                                    <button class="add-to-cart-btn"
+                                            data-id="{{ product.idProduct if product.idProduct is defined else product.id }}"
+                                            data-name="{{ product.nameProduct or product.name }}"
+                                            data-price="{{ product.price }}"
+                                            data-stock="{{ product.stock }}"
+                                            {% if product.stock <= 0 %}disabled{% endif %}>
+                                        <i class="fas fa-cart-plus me-2"></i>
+                                        {% if product.stock <= 0 %}Agotado{% else %}Añadir al carrito{% endif %}
+                                    </button>
+                                    
+                                    <!-- NUEVO BOTÓN VER DETALLES -->
+                                    <a href="{{ url_for('products.product_detail', product_id=product.id) }}" 
+                                       class="view-details-btn">
+                                        <i class="fas fa-eye me-2"></i>Ver Detalles
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <div class="col-12">
-                            <div class="alert alert-info">No hay productos disponibles.</div>
+                        <div class="col-12 text-center py-5">
+                            <h4 class="text-muted">No hay productos disponibles en este momento</h4>
+                            <p class="text-muted">Vuelve pronto para descubrir nuestras novedades</p>
                         </div>
                     {% endif %}
                 </div>
-
-                <!-- DETALLES DE CUENTA -->
-                <div class="card profile-card mt-4">
-                    <div class="card-body">
-                        <h6>Detalles de tu cuenta</h6>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="mb-1"><strong>Nombre:</strong> {{ username }}</p>
-                                <p class="mb-1"><strong>Email:</strong> {{ current_user.emailUser }}</p>
-                                <p class="mb-0"><strong>Estado:</strong> <span class="badge bg-success">Activa</span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="mb-1"><strong>Rol:</strong> {{ role_label }}</p>
-                                <p class="mb-1"><strong>Productos en carrito:</strong> {{ current_user.get_cart_count() }}</p>
-                                <p class="mb-0"><strong>Último acceso:</strong> Ahora</p>
-                            </div>
-                        </div>
-                    </div>
+                
+                <!-- Mensaje informativo sobre productos -->
+                {% if products and products|length < 17 %}
+                <div class="alert alert-info mt-4">
+                    <h6>¿No ves todos tus productos?</h6>
+                    <p class="mb-0">Actualmente se muestran {{ products|length }} productos. Revisa tu backend Flask para asegurarte de que estás obteniendo todos los productos.</p>
                 </div>
-
-            </div> <!-- fin main -->
+                {% endif %}
+            </div>
         </div>
     </div>
 
-    <footer class="py-4 mt-5">
-        <div class="container text-center">
-            <small class="text-muted">© 2025 Fashion Boutique. Todos los derechos reservados.</small>
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Términos y condiciones</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Ayuda</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="text-center">
+                <small>© 2025 Fashion Boutique. Todos los derechos reservados.</small>
+            </div>
         </div>
     </footer>
 
@@ -366,7 +648,7 @@
             `;
             
             if (type === 'success') {
-                notification.style.background = '#1a1a1a';
+                notification.style.background = '#000000';
                 notification.style.color = 'white';
             } else if (type === 'warning') {
                 notification.style.background = '#ffc107';
@@ -391,7 +673,7 @@
         }
 
         // Agregar al carrito
-        document.querySelectorAll('.add-to-cart').forEach(btn => {
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const productId = this.dataset.id;
                 const productName = this.dataset.name;
@@ -424,12 +706,14 @@
                         const originalClass = this.className;
                         
                         this.innerHTML = '<i class="fas fa-check"></i> Agregado';
-                        this.className = 'btn btn-sm btn-success';
+                        this.className = 'add-to-cart-btn';
+                        this.style.background = '#28a745';
                         this.disabled = true;
                         
                         setTimeout(() => {
                             this.innerHTML = originalHTML;
                             this.className = originalClass;
+                            this.style.background = '';
                             this.disabled = false;
                             
                             // Actualizar contador del carrito
@@ -465,10 +749,12 @@
             });
 
             // Actualizar también en la sección de información
-            const infoElements = document.querySelectorAll('p strong:contains("Productos en carrito:")');
-            document.querySelectorAll('p').forEach(p => {
-                if (p.textContent.includes('Productos en carrito:')) {
-                    p.innerHTML = p.innerHTML.replace(/\d+/, count);
+            document.querySelectorAll('.info-item').forEach(item => {
+                if (item.textContent.includes('Productos en carrito:')) {
+                    const valueSpan = item.querySelector('.info-value');
+                    if (valueSpan) {
+                        valueSpan.textContent = count;
+                    }
                 }
             });
         }
@@ -497,7 +783,7 @@
         });
 
         // Manejar productos agotados
-        document.querySelectorAll('.add-to-cart[disabled]').forEach(btn => {
+        document.querySelectorAll('.add-to-cart-btn[disabled]').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 showNotification('Este producto está actualmente agotado', 'warning');

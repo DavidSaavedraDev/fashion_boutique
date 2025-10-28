@@ -1014,3 +1014,208 @@ def reset_token():
 @bp.route('/test')
 def test():
     return "✅ ¡La aplicación funciona correctamente!"
+
+
+
+# FUNCIÓN PARA ENVIAR NOTIFICACIONES DE ESTADO DE PEDIDO
+def send_order_status_email(customer_email, customer_name, order_id, new_status, order_details=None):
+    try:
+        # Mapeo de estados a mensajes más descriptivos
+        status_messages = {
+            'Pendiente': 'está pendiente de revisión',
+            'Procesando': 'se está procesando y preparando',
+            'Enviado': 'ha sido enviado',
+            'Completado': 'ha sido completado y entregado',
+            'Cancelado': 'ha sido cancelado'
+        }
+        
+        status_icons = {
+            'Pendiente': '⏳',
+            'Procesando': '🔄',
+            'Enviado': '🚚',
+            'Completado': '✅',
+            'Cancelado': '❌'
+        }
+        
+        status_message = status_messages.get(new_status, f'tiene el estado: {new_status}')
+        status_icon = status_icons.get(new_status, '📦')
+
+        msg = Message(
+            subject=f'{status_icon} Actualización de tu Pedido #{order_id} - Fashion Boutique',
+            sender=('Fashion Boutique', 'noreply.fashionboutique@gmail.com'),
+            recipients=[customer_email]
+        )
+
+        # Crear el cuerpo HTML del email
+        msg.html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                body {{
+                    font-family: 'Arial', sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .email-container {{
+                    max-width: 600px;
+                    margin: 20px auto;
+                    background: white;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                }}
+                .header {{
+                    background: #000000;
+                    color: white;
+                    padding: 30px;
+                    text-align: center;
+                }}
+                .header h1 {{
+                    margin: 0;
+                    font-size: 28px;
+                    font-weight: bold;
+                }}
+                .content {{
+                    padding: 30px;
+                }}
+                .status-update {{
+                    background: #f8f9fa;
+                    padding: 25px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                    text-align: center;
+                    border-left: 4px solid #4A90E2;
+                }}
+                .order-info {{
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                    border: 1px solid #e9ecef;
+                }}
+                .next-steps {{
+                    background: #e8f5e8;
+                    padding: 20px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                }}
+                .tracking-info {{
+                    background: #fff3cd;
+                    padding: 20px;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                }}
+                .footer {{
+                    background: #f8f9fa;
+                    padding: 20px;
+                    text-align: center;
+                    color: #666;
+                    font-size: 12px;
+                }}
+                .status-badge {{
+                    display: inline-block;
+                    padding: 8px 16px;
+                    background: #4A90E2;
+                    color: white;
+                    border-radius: 20px;
+                    font-weight: bold;
+                    margin: 10px 0;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="email-container">
+                <div class="header">
+                    <h1>FASHION BOUTIQUE</h1>
+                    <p>Actualización de Pedido</p>
+                </div>
+                
+                <div class="content">
+                    <h2>¡Hola {customer_name}!</h2>
+                    <p>Queremos informarte sobre el estado actual de tu pedido en <strong>Fashion Boutique</strong>.</p>
+                    
+                    <div class="status-update">
+                        <h3>{status_icon} Estado Actualizado</h3>
+                        <div class="status-badge">{new_status}</div>
+                        <p>Tu pedido <strong>#{order_id}</strong> {status_message}.</p>
+                    </div>
+                    
+                    <div class="order-info">
+                        <h4>📋 Resumen del Pedido</h4>
+                        <p><strong>Número de Pedido:</strong> #{order_id}</p>
+                        <p><strong>Estado Actual:</strong> {new_status}</p>
+                        <p><strong>Fecha de Actualización:</strong> {datetime.now().strftime('%d/%m/%Y %H:%M')}</p>
+                        {f'<p><strong>Detalles:</strong> {order_details}</p>' if order_details else ''}
+                    </div>
+                    
+                    {f'''
+                    <div class="tracking-info">
+                        <h4>📦 Información de Envío</h4>
+                        <p>Tu pedido está en camino. Recibirás actualizaciones del envío próximamente.</p>
+                        <p><strong>💡 Tip:</strong> Mantén tu teléfono disponible para coordinar la entrega.</p>
+                    </div>
+                    ''' if new_status == 'Enviado' else ''}
+                    
+                    {f'''
+                    <div class="next-steps">
+                        <h4>🎉 ¡Pedido Entregado!</h4>
+                        <p>Tu pedido ha sido completado exitosamente. ¡Esperamos que disfrutes tus productos!</p>
+                        <p><strong>¿Tienes alguna pregunta?</strong> No dudes en contactarnos.</p>
+                    </div>
+                    ''' if new_status == 'Completado' else ''}
+                    
+                    {f'''
+                    <div class="next-steps" style="background: #ffe6e6;">
+                        <h4>❌ Pedido Cancelado</h4>
+                        <p>Lamentamos informarte que tu pedido ha sido cancelado.</p>
+                        <p>Si crees que esto es un error o necesitas más información, por favor contáctanos inmediatamente.</p>
+                    </div>
+                    ''' if new_status == 'Cancelado' else ''}
+                    
+                    <p>Puedes ver el detalle completo de tu pedido en tu cuenta de Fashion Boutique.</p>
+                    
+                    <p>Si tienes alguna pregunta sobre tu pedido, estamos aquí para ayudarte.</p>
+                </div>
+                
+                <div class="footer">
+                    <p>© 2025 Fashion Boutique. Todos los derechos reservados.</p>
+                    <p>Este es un email automático, por favor no responder.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        # Versión de texto plano
+        msg.body = f"""
+        ACTUALIZACIÓN DE PEDIDO #{order_id} - Fashion Boutique
+        
+        Hola {customer_name},
+        
+        El estado de tu pedido #{order_id} ha sido actualizado a: {new_status}
+        
+        {f'Detalles: {order_details}' if order_details else ''}
+        
+        Estado: {new_status}
+        Fecha de actualización: {datetime.now().strftime('%d/%m/%Y %H:%M')}
+        
+        {f'📦 Tu pedido está en camino. Recibirás actualizaciones del envío próximamente.' if new_status == 'Enviado' else ''}
+        {f'🎉 ¡Tu pedido ha sido completado exitosamente! Esperamos que disfrutes tus productos.' if new_status == 'Completado' else ''}
+        {f'❌ Lamentamos informarte que tu pedido ha sido cancelado. Si necesitas más información, contáctanos.' if new_status == 'Cancelado' else ''}
+        
+        Si tienes preguntas, no dudes en contactarnos.
+        
+        Atentamente,
+        El equipo de Fashion Boutique
+        """
+
+        mail.send(msg)
+        logger.info(f"✅ Notificación de estado {new_status} enviada para pedido #{order_id} a {customer_email}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"❌ Error enviando notificación de estado: {str(e)}")
+        return False

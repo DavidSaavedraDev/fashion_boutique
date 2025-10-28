@@ -104,6 +104,33 @@ class Category(db.Model):
     def __repr__(self):
         return f'<Category {self.nameCategory}>'
 
+# ✅ MODELO SUBCATEGORY AGREGADO - Colócalo justo después de Category
+class Subcategory(db.Model):
+    __tablename__ = 'subcategory'
+    
+    idSubcategory = db.Column(db.Integer, primary_key=True)
+    idCategory = db.Column(db.Integer, db.ForeignKey('category.idCategory'), nullable=False)
+    nameSubcategory = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    status = db.Column(db.Enum('Activa', 'Inactiva'), default='Activa')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relación con la categoría padre
+    category = db.relationship('Category', backref=db.backref('subcategories', lazy=True))
+
+    def __repr__(self):
+        return f'<Subcategory {self.nameSubcategory}>'
+
+    def to_dict(self):
+        return {
+            'idSubcategory': self.idSubcategory,
+            'idCategory': self.idCategory,
+            'nameSubcategory': self.nameSubcategory,
+            'description': self.description,
+            'status': self.status,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
+
 class Order(db.Model):
     __tablename__ = 'orders'
     
@@ -112,12 +139,29 @@ class Order(db.Model):
     totalAmount = db.Column(db.Numeric(10, 2), nullable=False)
     status = db.Column(db.Enum('Pendiente', 'Procesando', 'Enviado', 'Completado', 'Cancelado'), default='Pendiente')
     orderDate = db.Column(db.DateTime, default=datetime.utcnow)
+    payment_method = db.Column(db.String(50), default='Efectivo')
+    items_count = db.Column(db.Integer, default=0)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relación con detalles
     details = db.relationship('OrderDetail', backref='order', lazy=True)
 
     def __repr__(self):
         return f'<Order {self.idOrder}>'
+
+    # AGREGAR ESTE MÉTODO
+    def to_dict(self):
+        return {
+            'id': self.idOrder,
+            'user_id': self.idUser,
+            'customer_name': self.user.nameUser if self.user else 'N/A',
+            'total': float(self.totalAmount) if self.totalAmount else 0,
+            'status': self.status,
+            'payment_method': self.payment_method,
+            'items_count': self.items_count,
+            'created_at': self.orderDate.isoformat() if self.orderDate else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }
 
 class OrderDetail(db.Model):
     __tablename__ = 'order_detail'

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Pedidos - Fashion Boutique</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-black: #1a1a1a;
+            --secondary-black: #2d2d2d;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --border-gray: #dee2e6;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--primary-black);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            border-bottom: 1px solid var(--border-gray);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-black) !important;
+            text-transform: uppercase;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            color: var(--primary-black);
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--primary-black);
+        }
+
+        .order-card {
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .order-card:hover {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .order-header {
+            border-bottom: 1px solid var(--border-gray);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .order-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-black);
+        }
+
+        .order-date {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .status-pendiente { background: #fff3cd; color: #856404; }
+        .status-procesando { background: #cce7ff; color: #004085; }
+        .status-enviado { background: #d1ecf1; color: #0c5460; }
+        .status-completado { background: #d4edda; color: #155724; }
+        .status-cancelado { background: #f8d7da; color: #721c24; }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-black);
+        }
+
+        .product-price {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .order-summary {
+            background: var(--light-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .summary-total {
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-top: 1px solid var(--border-gray);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            border-radius: 0;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            padding: 0.7rem 1.5rem;
+            border: 1px solid;
+        }
+
+        .btn-outline-dark {
+            border-color: var(--primary-black);
+            color: var(--primary-black);
+            background: transparent;
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--primary-black);
+            color: white;
+        }
+
+        .footer {
+            background: var(--primary-black);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .order-card {
+                padding: 1rem;
+            }
+            
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-image {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('auth.home') }}">
+                <i class="fas fa-store me-2"></i>FASHION BOUTIQUE
+            </a>
+            
+            <div class="d-flex align-items-center">
+                <a class="nav-link mx-2" href="{{ url_for('auth.home') }}">
+                    <i class="fas fa-home me-1"></i> Inicio
+                </a>
+                {% if current_user.is_authenticated %}
+                <a class="nav-link mx-2" href="{{ url_for('users.profile') }}">
+                    <i class="fas fa-user me-1"></i> Perfil
+                </a>
+                <a class="nav-link mx-2 active" href="{{ url_for('users.user_orders') }}">
+                    <i class="fas fa-shopping-bag me-1"></i> Mis Pedidos
+                </a>
+                <a class="nav-link mx-2" href="{{ url_for('auth.logout') }}">
+                    <i class="fas fa-sign-out-alt me-1"></i> Salir
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container py-5">
+        <h1 class="page-title">
+            <i class="fas fa-shopping-bag me-3"></i>Mis Pedidos
+        </h1>
+        
+        {% if orders_data %}
+        <div class="fade-in">
+            {% for order_info in orders_data %}
+            <div class="order-card">
+                <!-- Encabezado del pedido -->
+                <div class="order-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="order-number">Pedido #{{ order_info.order.idOrder }}</div>
+                            <div class="order-date">
+                                <i class="fas fa-calendar me-1"></i>
+                                {{ order_info.order.orderDate.strftime('%d/%m/%Y %H:%M') }}
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <span class="order-status status-{{ order_info.order.status.lower() }}">
+                                {{ order_info.order.status }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Productos del pedido -->
+                <div class="order-products">
+                    {% for detail in order_info.details %}
+                    <div class="product-item">
+                        <img src="{{ detail.image }}" 
+                             alt="{{ detail.product_name }}" 
+                             class="product-image"
+                             onerror="this.src='https://via.placeholder.com/60x60/e9ecef/6c757d?text=Imagen'">
+                        <div class="product-info">
+                            <div class="product-name">{{ detail.product_name }}</div>
+                            <div class="product-price">
+                                ${{ "%.2f"|format(detail.price) }} x {{ detail.quantity }} unidades
+                            </div>
+                        </div>
+                        <div class="product-total">
+                            ${{ "%.2f"|format(detail.subtotal) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Resumen del pedido -->
+                <div class="order-summary">
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span>${{ "%.2f"|format(order_info.total_amount) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Envío:</span>
+                        <span>Gratis</span>
+                    </div>
+                    <div class="summary-item summary-total">
+                        <span>Total:</span>
+                        <span>${{ "%.2f"|format(order_info.total_amount) }}</span>
+                    </div>
+                    
+                    <!-- Información de pago -->
+                    {% if order_info.invoice %}
+                    <div class="mt-3 pt-3 border-top">
+                        <small class="text-muted">
+                            <i class="fas fa-credit-card me-1"></i>
+                            Método de pago: {{ order_info.invoice.payment_method }}
+                        </small>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Acciones del pedido -->
+                <div class="mt-3 d-flex gap-2">
+                    <button class="btn btn-outline-dark btn-sm" 
+                            onclick="viewOrderDetails({{ order_info.order.idOrder }})">
+                        <i class="fas fa-eye me-1"></i> Ver Detalles
+                    </button>
+                    {% if order_info.order.status == 'Pendiente' %}
+                    <button class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-times me-1"></i> Cancelar Pedido
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Estado vacío -->
+        <div class="empty-state fade-in">
+            <div class="empty-icon">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h3 class="empty-title">Aún no tienes pedidos</h3>
+            <p class="text-muted mb-4">Descubre nuestra colección y realiza tu primer pedido</p>
+            <a href="{{ url_for('auth.home') }}" class="btn btn-outline-dark">
+                <i class="fas fa-shopping-bag me-2"></i> Explorar Productos
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 Fashion Boutique. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function viewOrderDetails(orderId) {
+            // Aquí puedes implementar la vista de detalles del pedido
+            alert(`Mostrando detalles del pedido #${orderId}`);
+            // window.location.href = `/order/details/${orderId}`;
+        }
+
+        // Mostrar notificaciones de flash messages
+        document.addEventListener('DOMContentLoaded', function() {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        showNotification('{{ message }}', '{{ category }}');
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        });
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 1050;
+                min-width: 300px;
+                border-radius: 0;
+                border: none;
+                font-weight: 500;
+                letter-spacing: 1px;
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = '#1a1a1a';
+                notification.style.color = 'white';
+            } else if (type === 'warning') {
+                notification.style.background = '#ffc107';
+                notification.style.color = '#000';
+            } else {
+                notification.style.background = '#dc3545';
+                notification.style.color = 'white';
+            }
+            
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+    "store": {
+        "name": "tienda ",
+        "nit": "900.123.456-7",
+        "address": "Cra 45 #26-85, Medellín",
+        "phone": "+57 123 456 7890",
+        "email": "info@fashionboutique.com"
+    },
+    "billing": {
+        "dian_resolution": "187640000",
+        "invoice_prefix": "FACT",
+        "initial_number": 1,
+        "current_number": 1,
+        "tax_rate": 21
+    },
+    "printing": {
+        "auto_print": true,
+        "print_copy": true,
+        "paper_size": "Térmico 80mm",
+        "printer_name": "Default"
+    },
+    "notifications": {
+        "low_stock": true,
+        "daily_sales": true,
+        "online_orders": false,
+        "email_notifications": true
+    },
+    "general": {
+        "currency": "COP",
+        "timezone": "America/Bogota",
+        "language": "es"
+    }
+}

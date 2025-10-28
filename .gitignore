@@ -18,3 +18,7 @@ __pycache__/
 # Archivos del sistema
 *.log
 *.sqlite3
+
+
+.github/instructions/kluster-code-verify.instructions.md
+.kluster

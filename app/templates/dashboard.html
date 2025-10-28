@@ -384,13 +384,17 @@
             </div>
         </div>
 
-        <!-- Dashboard Section -->
-        <div id="dashboard" class="content-section active">
-            <!-- Welcome Card -->
-            <div class="welcome-card">
-              <span class="me-2">Hola, {{ current_user.nameUser }}</span>
-                <p class="lead">Bienvenido/a al panel de administración de la tienda. Aquí puedes gestionar productos, categorías, pedidos y más.</p>
-            </div>
+       <!-- Dashboard Section -->
+    <div id="dashboard" class="content-section active">
+        <!-- Welcome Card Mejorada -->
+        <div class="welcome-card">
+            <span>Hola, David Saavedra</span>
+            <p class="lead">Bienvenido/a al panel de administración de la tienda. Aquí puedes gestionar productos, categorías, pedidos y más.</p>
+            <div class="welcome-icon"></div>
+        </div>
+    </div>
+</body>
+</html>
 
             <!-- Statistics Cards -->
             <div class="row">
@@ -465,14 +469,12 @@
                 </div>
             </div>
         </div>
-
-
-
-
+        
 
 </head>
 <body>
     <div class="container mt-4 mb-5">
+        
         <!-- Punto de Venta Section -->
         <div id="pos" class="content-section">
             <div class="table-container">
@@ -1566,9 +1568,9 @@
         <div id="productos" class="content-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Gestión de Productos</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productoModal">
-                    <i class="bi bi-plus-circle"></i> Nuevo Producto
-                </button>
+              <button class="btn btn-primary" id="newProductBtn" data-bs-toggle="modal" data-bs-target="#productoModal">
+    <i class="bi bi-plus-circle"></i> Nuevo Producto
+</button>
             </div>
 
             <div class="table-container">
@@ -1601,77 +1603,73 @@
 
 
         
-        <!-- Modal para agregar/editar producto -->
-        <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="productoModalLabel">Agregar Nuevo Producto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="productForm">
-                            <input type="hidden" id="productId">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="productName" class="form-label">Nombre del Producto *</label>
-                                        <input type="text" class="form-control" id="productName" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="productCategory" class="form-label">Categoría *</label>
-                                        <select class="form-select" id="productCategory" required>
-                                            <option value="">Seleccionar categoría</option>
-                                            <option value="Vestidos">Vestidos</option>
-                                            <option value="Pantalones">Pantalones</option>
-                                            <option value="Camisas">Camisas</option>
-                                            <option value="Accesorios">Accesorios</option>
-                                            <option value="Zapatos">Zapatos</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="productPrice" class="form-label">Precio *</label>
-                                        <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="productStock" class="form-label">Stock *</label>
-                                        <input type="number" class="form-control" id="productStock" min="0" required>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- Modal para agregar/editar producto - VERSIÓN CON CATEGORÍAS DINÁMICAS -->
+<div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productoModalLabel">Agregar Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="productDescription" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                                <label for="productName" class="form-label">Nombre del Producto *</label>
+                                <input type="text" class="form-control" id="productName" required>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="productImage" class="form-label">URL de la Imagen</label>
-                                <input type="url" class="form-control" id="productImage" placeholder="https://ejemplo.com/imagen.jpg">
+                                <label for="productCategory" class="form-label">Categoría *</label>
+                                <select class="form-select" id="productCategory" required>
+                                    <option value="">Cargando categorías...</option>
+                                    <!-- Las categorías se cargarán aquí dinámicamente -->
+                                </select>
                             </div>
-                            <div class="alert alert-info">
-                                <small>Los campos marcados con * son obligatorios.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="productPrice" class="form-label">Precio *</label>
+                                <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="productStock" class="form-label">Stock *</label>
+                                <input type="number" class="form-control" id="productStock" min="0" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="saveProduct">
-                            <span id="saveProductText">Guardar Producto</span>
-                            <span id="saveProductSpinner" class="d-none">
-                                <span class="db-spinner spinner-border-sm"></span> Guardando...
-                            </span>
-                        </button>
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="productDescription" rows="3"></textarea>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">URL de la Imagen</label>
+                        <input type="url" class="form-control" id="productImage" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    <div class="alert alert-info">
+                        <small>Los campos marcados con * son obligatorios.</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveProduct">
+                    <span id="saveProductText">Guardar Producto</span>
+                    <span id="saveProductSpinner" class="d-none">
+                        <span class="db-spinner spinner-border-sm"></span> Guardando...
+                    </span>
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
 <!-- Modal para agregar/editar usuario -->
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -1738,13 +1736,12 @@
     </div>
 </div>  
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Categorías</title>
+    <title>Gestión de Categorías y Subcategorías</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -1797,31 +1794,308 @@
             z-index: 1050;
             min-width: 300px;
         }
+        .subcategory-badge {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin: 2px;
+            display: inline-block;
+        }
+        .image-preview-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .image-preview {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-preview .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .additional-image-input {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Categorías Section -->
+    <!-- Productos Section -->
+    <div id="productos" class="content-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Gestión de Productos</h2>
+            <button class="btn btn-primary" id="newProductBtn" data-bs-toggle="modal" data-bs-target="#productoModal">
+                <i class="bi bi-plus-circle"></i> Nuevo Producto
+            </button>
+        </div>
+
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                <span class="db-spinner text-primary"></span>
+                                <p class="mt-2">Cargando productos...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar producto - VERSIÓN MEJORADA -->
+    <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productoModalLabel">Agregar Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <input type="hidden" id="productId">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productName" class="form-label">Nombre del Producto *</label>
+                                    <input type="text" class="form-control" id="productName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productCategory" class="form-label">Categoría *</label>
+                                    <select class="form-select" id="productCategory" required onchange="loadSubcategoriesAndSizes(this.value)">
+                                        <option value="">Cargando categorías...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productSubcategory" class="form-label">Subcategoría</label>
+                                    <select class="form-select" id="productSubcategory">
+                                        <option value="">Primero selecciona una categoría</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productSize" class="form-label">Talla</label>
+                                    <select class="form-select" id="productSize">
+                                        <option value="">Seleccionar talla...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productPrice" class="form-label">Precio *</label>
+                                    <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productStock" class="form-label">Stock *</label>
+                                    <input type="number" class="form-control" id="productStock" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productColor" class="form-label">Color</label>
+                                    <input type="text" class="form-control" id="productColor" placeholder="Ej: Negro, Azul, Rojo...">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="productMaterial" class="form-label">Material</label>
+                                    <input type="text" class="form-control" id="productMaterial" placeholder="Ej: Algodón, Poliéster...">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <!-- Imagen Principal -->
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">URL de la Imagen Principal *</label>
+                            <input type="url" class="form-control" id="productImage" placeholder="https://ejemplo.com/imagen.jpg" required>
+                            <div class="form-text">Esta será la imagen que se muestre en el listado</div>
+                        </div>
+                        
+                        <!-- Imágenes Adicionales -->
+                        <div class="mb-3">
+                            <label class="form-label">Imágenes Adicionales</label>
+                            <div id="additionalImagesContainer">
+                                <div class="additional-image-input input-group mb-2">
+                                    <input type="url" class="form-control" placeholder="https://ejemplo.com/imagen2.jpg" data-image-index="1">
+                                    <button type="button" class="btn btn-outline-danger" onclick="removeImageField(this)">×</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="addImageField()">
+                                <i class="bi bi-plus"></i> Agregar otra imagen
+                            </button>
+                            <div class="form-text">Estas imágenes se mostrarán al pasar el mouse sobre el producto</div>
+                        </div>
+                        
+                        <!-- Vista Previa de Imágenes -->
+                        <div class="mb-3">
+                            <label class="form-label">Vista Previa</label>
+                            <div id="imagePreviews" class="image-preview-container">
+                                <!-- Las previsualizaciones se generarán aquí -->
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <small>Los campos marcados con * son obligatorios.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveProduct">
+                        <span id="saveProductText">Guardar Producto</span>
+                        <span id="saveProductSpinner" class="d-none">
+                            <span class="db-spinner spinner-border-sm"></span> Guardando...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar usuario -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalLabel">Agregar Nuevo Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <input type="hidden" id="userId">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Nombre Completo *</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="userEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPassword" class="form-label">Contraseña <span id="passwordHelp" class="text-muted">(dejar en blanco para no cambiar)</span></label>
+                            <input type="password" class="form-control" id="userPassword">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="userRole" class="form-label">Rol *</label>
+                                    <select class="form-select" id="userRole" required>
+                                        <option value="">Seleccionar rol</option>
+                                        <option value="Administrador">Administrador</option>
+                                        <option value="Usuario">Usuario</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="userStatus" class="form-label">Estado *</label>
+                                    <select class="form-select" id="userStatus" required>
+                                        <option value="">Seleccionar estado</option>
+                                        <option value="Activo">Activo</option>
+                                        <option value="Inactivo">Inactivo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-info">
+                            <small>Los campos marcados con * son obligatorios.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="saveUser">
+                        <span id="saveUserText">Guardar Usuario</span>
+                        <span id="saveUserSpinner" class="d-none">
+                            <span class="db-spinner spinner-border-sm"></span> Guardando...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categorías Section - VERSIÓN MEJORADA -->
     <div id="categorias" class="content-section">
         <h2 class="mb-4">Gestión de Categorías</h2>
         
+        <!-- Mensajes dinámicos -->
+        <div id="message" style="display: none;"></div>
+
         <div class="row">
             <div class="col-md-5">
                 <div class="form-container">
-                    <h4>Agregar Nueva Categoría</h4>
-                    <form id="categoriaForm">
+                    <h4>➕ Agregar Nueva Categoría</h4>
+                    <form id="categoryForm">
                         <div class="mb-3">
-                            <label for="categoriaNombre" class="form-label">Nombre de la categoría *</label>
-                            <input type="text" class="form-control" id="categoriaNombre" required>
+                            <label for="nameCategory" class="form-label">Nombre de la categoría *</label>
+                            <input type="text" class="form-control" id="nameCategory" required placeholder="Ej: Ropa de Mujer">
                         </div>
                         <div class="mb-3">
-                            <label for="categoriaDescripcion" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="categoriaDescripcion" rows="3"></textarea>
+                            <label for="description" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="description" rows="3" placeholder="Descripción opcional de la categoría..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" id="saveCategoryBtn">
-                            <span id="saveCategoryText">Guardar Categoría</span>
-                            <span id="saveCategorySpinner" class="d-none">
-                                <span class="db-spinner spinner-border-sm"></span> Guardando...
-                            </span>
+                        <button type="submit" class="btn btn-success">
+                            💾 Guardar Categoría
                         </button>
                     </form>
                 </div>
@@ -1829,83 +2103,27 @@
             
             <div class="col-md-7">
                 <div class="table-container">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Productos</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="categoriesTableBody">
-                                <tr>
-                                    <td colspan="6" class="text-center">
-                                        <span class="db-spinner text-primary"></span>
-                                        <p class="mt-2">Cargando categorías...</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <h4>📋 Categorías Existentes</h4>
+                    <div id="categoriesList">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p class="mt-2">Cargando categorías...</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal de confirmación -->
-    <div class="modal fade" id="confirmModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMessage">¿Está seguro de que desea realizar esta acción?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="confirmAction">Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de edición -->
-    <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar Categoría</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editCategoryForm">
-                        <input type="hidden" id="editCategoryId">
-                        <div class="mb-3">
-                            <label for="editCategoryName" class="form-label">Nombre de la categoría *</label>
-                            <input type="text" class="form-control" id="editCategoryName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoryDescription" class="form-label">Descripción</label>
-                            <textarea class="form-control" id="editCategoryDescription" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoryStatus" class="form-label">Estado</label>
-                            <select class="form-control" id="editCategoryStatus">
-                                <option value="Activa">Activa</option>
-                                <option value="Inactiva">Inactiva</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="saveEditCategory">Guardar Cambios</button>
+        <!-- Gestión de Subcategorías - EN LA MISMA PÁGINA -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="form-container">
+                    <h4>📂 Gestión de Subcategorías</h4>
+                    <div id="subcategoriesSection">
+                        <p class="text-muted">👆 Selecciona una categoría para gestionar sus subcategorías</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1913,293 +2131,1064 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ==============================================
+        // SISTEMA MEJORADO DE PRODUCTOS Y CATEGORÍAS
+        // ==============================================
+
         // Variables globales
-        let currentAction = null;
+        let currentCategoryId = null;
+        let currentCategoryName = '';
+        let categoriesData = [];
+        let imageCounter = 1;
 
-        // Mostrar alerta
-        function showAlert(type, message) {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show alert-fixed`;
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            
-            document.body.appendChild(alertDiv);
-            
-            setTimeout(() => {
-                if (alertDiv.parentNode) {
-                    alertDiv.parentNode.removeChild(alertDiv);
-                }
-            }, 5000);
-        }
+        // Inicializar cuando la página carga
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando sistema mejorado...');
+            loadCategories();
+            loadCategoriesForProducts();
+            loadProducts();
+            setupEventListeners();
+            setupProductEventListeners();
+        });
 
-        // Cargar categorías desde la base de datos
-        async function loadCategories() {
-            try {
-                const response = await fetch('/api/categories');
-                const data = await response.json();
-                
-                const tbody = document.getElementById('categoriesTableBody');
-                
-                if (!data.success) {
-                    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${data.error}</td></tr>`;
-                    return;
-                }
-                
-                if (data.categories.length === 0) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                <p>No hay categorías registradas.</p>
-                            </td>
-                        </tr>
-                    `;
-                    return;
-                }
-                
-                tbody.innerHTML = data.categories.map(category => `
-                    <tr>
-                        <td>${category.idCategory}</td>
-                        <td>${category.nameCategory}</td>
-                        <td>${category.description}</td>
-                        <td>${category.product_count}</td>
-                        <td>
-                            <span class="${category.status === 'Activa' ? 'status-active' : 'status-inactive'}">
-                                ${category.status}
-                            </span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary btn-action edit-category" 
-                                    data-id="${category.idCategory}"
-                                    data-name="${category.nameCategory}"
-                                    data-description="${category.description}"
-                                    data-status="${category.status}">
-                                Editar
-                            </button>
-                            <button class="btn btn-sm btn-outline-warning btn-action toggle-status" 
-                                    data-id="${category.idCategory}">
-                                ${category.status === 'Activa' ? 'Desactivar' : 'Activar'}
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger btn-action delete-category" 
-                                    data-id="${category.idCategory}">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                `).join('');
-                
-                // Agregar event listeners a los botones
-                document.querySelectorAll('.edit-category').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        const name = this.getAttribute('data-name');
-                        const description = this.getAttribute('data-description');
-                        const status = this.getAttribute('data-status');
-                        openEditModal(id, name, description, status);
-                    });
-                });
-                
-                document.querySelectorAll('.toggle-status').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        showConfirmModal(
-                            '¿Está seguro de que desea cambiar el estado de esta categoría?',
-                            () => toggleCategoryStatus(id)
-                        );
-                    });
-                });
-                
-                document.querySelectorAll('.delete-category').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        showConfirmModal(
-                            '¿Está seguro de que desea eliminar esta categoría? Esta acción no se puede deshacer.',
-                            () => deleteCategory(id)
-                        );
-                    });
-                });
-                
-            } catch (error) {
-                console.error('Error loading categories:', error);
-                showAlert('danger', 'Error al cargar las categorías');
+        // Configurar event listeners para categorías
+        function setupEventListeners() {
+            // Formulario de categoría
+            const categoryForm = document.getElementById('categoryForm');
+            if (categoryForm) {
+                categoryForm.addEventListener('submit', handleCategorySubmit);
             }
         }
 
-        // Mostrar modal de confirmación
-        function showConfirmModal(message, confirmCallback) {
-            document.getElementById('modalMessage').textContent = message;
-            currentAction = confirmCallback;
+        // Configurar event listeners para productos
+        function setupProductEventListeners() {
+            // Botón guardar producto
+            const saveProductBtn = document.getElementById('saveProduct');
+            if (saveProductBtn) {
+                saveProductBtn.addEventListener('click', handleProductSubmit);
+            }
             
-            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            modal.show();
+            // Botón nuevo producto
+            const newProductBtn = document.getElementById('newProductBtn');
+            if (newProductBtn) {
+                newProductBtn.addEventListener('click', resetProductForm);
+            }
+            
+            // Event listeners para previsualización de imágenes
+            document.getElementById('productImage').addEventListener('input', updateImagePreviews);
+            document.addEventListener('input', function(e) {
+                if (e.target.matches('#additionalImagesContainer input[type="url"]')) {
+                    updateImagePreviews();
+                }
+            });
         }
 
-        // Abrir modal de edición
-        function openEditModal(id, name, description, status) {
-            document.getElementById('editCategoryId').value = id;
-            document.getElementById('editCategoryName').value = name;
-            document.getElementById('editCategoryDescription').value = description;
-            document.getElementById('editCategoryStatus').value = status;
-            
-            const modal = new bootstrap.Modal(document.getElementById('editModal'));
-            modal.show();
+        // ==============================================
+        // SISTEMA DE CATEGORÍAS MEJORADO
+        // ==============================================
+
+        // Cargar categorías
+        async function loadCategories() {
+            try {
+                showLoading('categoriesList', 'Cargando categorías...');
+                
+                const response = await fetch('/categories/api/categories');
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderCategories(data.categories);
+                } else {
+                    showMessage('❌ Error al cargar categorías: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error cargando categorías:', error);
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
         }
+
+        // Renderizar categorías
+        function renderCategories(categories) {
+            const container = document.getElementById('categoriesList');
+            
+            if (!categories || categories.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-info">
+                        <p class="mb-0">📭 No hay categorías registradas</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Productos</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            categories.forEach(cat => {
+                html += `
+                    <tr>
+                        <td>
+                            <strong>${escapeHtml(cat.nameCategory)}</strong>
+                            ${cat.description ? `<br><small class="text-muted">${escapeHtml(cat.description)}</small>` : ''}
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">${cat.product_count} productos</span>
+                        </td>
+                        <td>
+                            <span class="badge ${cat.status === 'Activa' ? 'bg-success' : 'bg-danger'}">
+                                ${cat.status}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary" onclick="selectCategory(${cat.idCategory}, '${escapeHtml(cat.nameCategory)}')">
+                                    📂 Gestionar
+                                </button>
+                                <button class="btn btn-outline-warning" onclick="toggleCategoryStatus(${cat.idCategory})">
+                                    ${cat.status === 'Activa' ? '❌ Desactivar' : '✅ Activar'}
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="deleteCategory(${cat.idCategory})">
+                                    🗑️ Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
+        // Seleccionar categoría para subcategorías
+        async function selectCategory(categoryId, categoryName) {
+            currentCategoryId = categoryId;
+            currentCategoryName = categoryName;
+            
+            showMessage(`📂 Gestionando subcategorías de: <strong>${categoryName}</strong>`, 'info');
+            await loadSubcategories(categoryId);
+        }
+
+        // Cargar subcategorías
+        async function loadSubcategories(categoryId) {
+            try {
+                showLoading('subcategoriesSection', 'Cargando subcategorías...');
+                
+                const response = await fetch(`/categories/api/categories/${categoryId}/subcategories`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderSubcategories(data.subcategories);
+                } else {
+                    showMessage('❌ Error al cargar subcategorías: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error cargando subcategorías:', error);
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // Renderizar subcategorías
+        function renderSubcategories(subcategories) {
+            const container = document.getElementById('subcategoriesSection');
+            
+            let html = `
+                <div class="subcategory-management">
+                    <div class="alert alert-info">
+                        <h5>📁 Subcategorías de: <strong>${escapeHtml(currentCategoryName)}</strong></h5>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0">➕ Agregar Subcategoría</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="subcategoryForm" onsubmit="handleSubcategorySubmit(event)">
+                                        <input type="hidden" id="idCategory" value="${currentCategoryId}">
+                                        <div class="mb-3">
+                                            <label for="nameSubcategory" class="form-label">Nombre *</label>
+                                            <input type="text" class="form-control" id="nameSubcategory" required placeholder="Ej: Vestidos, Blusas, etc.">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="subcategoryDescription" class="form-label">Descripción</label>
+                                            <textarea class="form-control" id="subcategoryDescription" rows="2" placeholder="Descripción opcional..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-success w-100">
+                                            ➕ Agregar Subcategoría
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+            `;
+
+            if (!subcategories || subcategories.length === 0) {
+                html += `
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p class="text-muted mb-0">📭 No hay subcategorías para esta categoría</p>
+                                </div>
+                            </div>
+                `;
+            } else {
+                html += `
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">📋 Subcategorías Existentes</h6>
+                                    <span class="badge bg-primary">${subcategories.length}</span>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive" style="max-height: 300px;">
+                                        <table class="table table-hover mb-0">
+                                            <thead class="table-light sticky-top">
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                `;
+
+                subcategories.forEach(sub => {
+                    html += `
+                                                <tr>
+                                                    <td>
+                                                        <strong>${escapeHtml(sub.nameSubcategory)}</strong>
+                                                        ${sub.description ? `<br><small class="text-muted">${escapeHtml(sub.description)}</small>` : ''}
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge ${sub.status === 'Activa' ? 'bg-success' : 'bg-danger'}">
+                                                            ${sub.status}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm">
+                                                            <button class="btn btn-outline-warning" onclick="toggleSubcategoryStatus(${sub.idSubcategory})">
+                                                                ${sub.status === 'Activa' ? '❌' : '✅'}
+                                                            </button>
+                                                            <button class="btn btn-outline-danger" onclick="deleteSubcategory(${sub.idSubcategory})">
+                                                                🗑️
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                    `;
+                });
+
+                html += `
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                `;
+            }
+
+            html += `
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        // ==============================================
+        // MANEJADORES DE FORMULARIOS - CATEGORÍAS
+        // ==============================================
+
+        // Manejar envío de categoría
+        async function handleCategorySubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('nameCategory').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            if (!name) {
+                showMessage('⚠️ El nombre de la categoría es requerido', 'warning');
+                return;
+            }
+            
+            try {
+                const formData = {
+                    nameCategory: name,
+                    description: description,
+                    status: 'Activa'
+                };
+
+                const response = await fetch('/categories/api/categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Categoría creada correctamente', 'success');
+                    document.getElementById('categoryForm').reset();
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // Manejar envío de subcategoría
+        async function handleSubcategorySubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('nameSubcategory').value.trim();
+            const description = document.getElementById('subcategoryDescription').value.trim();
+            
+            if (!name) {
+                showMessage('⚠️ El nombre de la subcategoría es requerido', 'warning');
+                return;
+            }
+            
+            try {
+                const formData = {
+                    idCategory: currentCategoryId,
+                    nameSubcategory: name,
+                    description: description,
+                    status: 'Activa'
+                };
+
+                const response = await fetch('/categories/api/subcategories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Subcategoría creada correctamente', 'success');
+                    document.getElementById('subcategoryForm').reset();
+                    await loadSubcategories(currentCategoryId);
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // ==============================================
+        // FUNCIONES CRUD - CATEGORÍAS
+        // ==============================================
 
         // Cambiar estado de categoría
-        async function toggleCategoryStatus(id) {
+        async function toggleCategoryStatus(categoryId) {
+            if (!confirm('¿Estás seguro de cambiar el estado de esta categoría?')) return;
+            
             try {
-                const response = await fetch(`/api/categories/${id}/status`, {
+                const response = await fetch(`/categories/api/categories/${categoryId}/status`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(`✅ ${data.message}`, 'success');
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                    if (currentCategoryId === categoryId) {
+                        await loadSubcategories(categoryId);
                     }
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // Eliminar categoría - CORREGIDO
+        async function deleteCategory(categoryId) {
+            if (!confirm('¿Estás seguro de eliminar esta categoría? También se eliminarán todas sus subcategorías. Esta acción no se puede deshacer.')) return;
+            
+            try {
+                const response = await fetch(`/categories/api/categories/${categoryId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Categoría eliminada correctamente', 'success');
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                    if (currentCategoryId === categoryId) {
+                        document.getElementById('subcategoriesSection').innerHTML = 
+                            '<p class="text-muted">👆 Selecciona una categoría para gestionar sus subcategorías</p>';
+                        currentCategoryId = null;
+                    }
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // Cambiar estado de subcategoría
+        async function toggleSubcategoryStatus(subcategoryId) {
+            if (!confirm('¿Estás seguro de cambiar el estado de esta subcategoría?')) return;
+            
+            try {
+                const response = await fetch(`/categories/api/subcategories/${subcategoryId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(`✅ ${data.message}`, 'success');
+                    await loadSubcategories(currentCategoryId);
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // Eliminar subcategoría - CORREGIDO
+        async function deleteSubcategory(subcategoryId) {
+            if (!confirm('¿Estás seguro de eliminar esta subcategoría? Esta acción no se puede deshacer.')) return;
+            
+            try {
+                const response = await fetch(`/categories/api/subcategories/${subcategoryId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Subcategoría eliminada correctamente', 'success');
+                    await loadSubcategories(currentCategoryId);
+                    await loadCategories();
+                    await loadCategoriesForProducts();
+                } else {
+                    showMessage('❌ Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message, 'error');
+            }
+        }
+
+        // ==============================================
+        // SISTEMA DE PRODUCTOS MEJORADO
+        // ==============================================
+
+        // Cargar categorías para el modal de productos
+        async function loadCategoriesForProducts() {
+            try {
+                const response = await fetch('/categories/api/categories');
+                const data = await response.json();
+                
+                if (data.success) {
+                    categoriesData = data.categories;
+                    renderCategoriesForProducts(data.categories);
+                } else {
+                    console.error('Error cargando categorías:', data.error);
+                }
+            } catch (error) {
+                console.error('Error cargando categorías:', error);
+            }
+        }
+
+        // Renderizar categorías en el select del modal
+        function renderCategoriesForProducts(categories) {
+            const categorySelect = document.getElementById('productCategory');
+            if (!categorySelect) return;
+            
+            categorySelect.innerHTML = '<option value="">Seleccionar categoría...</option>';
+            
+            categories.forEach(category => {
+                if (category.status === 'Activa') {
+                    const option = document.createElement('option');
+                    option.value = category.nameCategory;
+                    option.textContent = category.nameCategory;
+                    categorySelect.appendChild(option);
+                }
+            });
+        }
+
+        // Cargar subcategorías y tallas cuando se selecciona una categoría
+        async function loadSubcategoriesAndSizes(selectedCategory) {
+            const subcategorySelect = document.getElementById('productSubcategory');
+            const sizeSelect = document.getElementById('productSize');
+            
+            // Resetear selects
+            subcategorySelect.innerHTML = '<option value="">Seleccionar subcategoría...</option>';
+            sizeSelect.innerHTML = '<option value="">Seleccionar talla...</option>';
+            
+            if (!selectedCategory) {
+                subcategorySelect.innerHTML = '<option value="">Primero selecciona una categoría</option>';
+                return;
+            }
+            
+            try {
+                // Buscar la categoría seleccionada en los datos
+                const category = categoriesData.find(cat => cat.nameCategory === selectedCategory);
+                
+                if (category && category.subcategories) {
+                    // Cargar subcategorías
+                    category.subcategories.forEach(subcategory => {
+                        if (subcategory.status === 'Activa') {
+                            const option = document.createElement('option');
+                            option.value = subcategory.nameSubcategory;
+                            option.textContent = subcategory.nameSubcategory;
+                            subcategorySelect.appendChild(option);
+                        }
+                    });
+                    
+                    if (subcategorySelect.children.length === 1) {
+                        subcategorySelect.innerHTML = '<option value="">No hay subcategorías para esta categoría</option>';
+                    }
+                }
+                
+                // Cargar tallas según la categoría
+                loadSizesForCategory(selectedCategory);
+                
+            } catch (error) {
+                console.error('Error cargando subcategorías:', error);
+                subcategorySelect.innerHTML = '<option value="">Error cargando subcategorías</option>';
+            }
+        }
+
+        // Cargar tallas según la categoría seleccionada
+        function loadSizesForCategory(category) {
+            const sizeSelect = document.getElementById('productSize');
+            
+            // Definir tallas por tipo de categoría
+            const sizeOptions = {
+                'hombre': ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+                'mujer': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                'niño': ['2T', '3T', '4T', '5T', '6T', '8', '10', '12', '14'],
+                'bebé': ['0-3M', '3-6M', '6-9M', '9-12M', '12-18M', '18-24M'],
+                'zapatos': Array.from({length: 13}, (_, i) => (i + 35).toString()),
+                'zapatos hombre': Array.from({length: 13}, (_, i) => (i + 39).toString()),
+                'zapatos mujer': Array.from({length: 10}, (_, i) => (i + 35).toString()),
+                'zapatos niño': Array.from({length: 8}, (_, i) => (i + 28).toString()),
+                'accesorios': ['Única'],
+                'bolsos': ['Pequeño', 'Mediano', 'Grande'],
+                'cinturones': ['28', '30', '32', '34', '36', '38', '40', '42', '44'],
+                'default': ['Única']
+            };
+            
+            let selectedSizes = sizeOptions.default;
+            const categoryLower = category.toLowerCase();
+            
+            if (categoryLower.includes('zapato')) {
+                if (categoryLower.includes('hombre')) selectedSizes = sizeOptions['zapatos hombre'];
+                else if (categoryLower.includes('mujer')) selectedSizes = sizeOptions['zapatos mujer'];
+                else if (categoryLower.includes('niño')) selectedSizes = sizeOptions['zapatos niño'];
+                else selectedSizes = sizeOptions.zapatos;
+            } else if (categoryLower.includes('hombre')) {
+                selectedSizes = sizeOptions.hombre;
+            } else if (categoryLower.includes('mujer')) {
+                selectedSizes = sizeOptions.mujer;
+            } else if (categoryLower.includes('niño') || categoryLower.includes('infantil')) {
+                selectedSizes = sizeOptions.niño;
+            } else if (categoryLower.includes('bebé')) {
+                selectedSizes = sizeOptions.bebé;
+            } else if (categoryLower.includes('bolso')) {
+                selectedSizes = sizeOptions.bolsos;
+            } else if (categoryLower.includes('cinturón')) {
+                selectedSizes = sizeOptions.cinturones;
+            } else if (categoryLower.includes('accesorio')) {
+                selectedSizes = sizeOptions.accesorios;
+            }
+            
+            sizeSelect.innerHTML = '<option value="">Seleccionar talla...</option>';
+            selectedSizes.forEach(size => {
+                const option = document.createElement('option');
+                option.value = size;
+                option.textContent = size;
+                sizeSelect.appendChild(option);
+            });
+            
+            const customOption = document.createElement('option');
+            customOption.value = 'personalizada';
+            customOption.textContent = 'Otra talla (especificar en descripción)';
+            sizeSelect.appendChild(customOption);
+        }
+
+        // ==============================================
+        // SISTEMA DE MÚLTIPLES IMÁGENES
+        // ==============================================
+
+        // Agregar campo de imagen adicional
+        function addImageField() {
+            imageCounter++;
+            const container = document.getElementById('additionalImagesContainer');
+            const newField = document.createElement('div');
+            newField.className = 'additional-image-input input-group mb-2';
+            newField.innerHTML = `
+                <input type="url" class="form-control" placeholder="https://ejemplo.com/imagen${imageCounter}.jpg" data-image-index="${imageCounter}">
+                <button type="button" class="btn btn-outline-danger" onclick="removeImageField(this)">×</button>
+            `;
+            container.appendChild(newField);
+        }
+
+        // Remover campo de imagen
+        function removeImageField(button) {
+            const container = document.getElementById('additionalImagesContainer');
+            if (container.children.length > 1) {
+                button.parentElement.remove();
+                updateImagePreviews();
+            }
+        }
+
+        // Actualizar previsualizaciones de imágenes
+        function updateImagePreviews() {
+            const previewContainer = document.getElementById('imagePreviews');
+            previewContainer.innerHTML = '';
+
+            // Imagen principal
+            const mainImage = document.getElementById('productImage').value;
+            if (mainImage) {
+                const preview = createImagePreview(mainImage, 'Principal', true);
+                previewContainer.appendChild(preview);
+            }
+
+            // Imágenes adicionales
+            const additionalInputs = document.querySelectorAll('#additionalImagesContainer input');
+            additionalInputs.forEach((input, index) => {
+                if (input.value) {
+                    const preview = createImagePreview(input.value, `Extra ${index + 1}`, false);
+                    previewContainer.appendChild(preview);
+                }
+            });
+        }
+
+        // Crear elemento de previsualización de imagen
+        function createImagePreview(url, label, isMain) {
+            const preview = document.createElement('div');
+            preview.className = 'image-preview';
+            preview.innerHTML = `
+                <img src="${url}" alt="${label}" onerror="this.src='https://via.placeholder.com/100x100/f8f9fa/000?text=Imagen+no+disponible'">
+                <div class="position-absolute top-0 start-0 m-1">
+                    <span class="badge ${isMain ? 'bg-primary' : 'bg-secondary'}">${label}</span>
+                </div>
+            `;
+            return preview;
+        }
+
+        // ==============================================
+        // MANEJADORES DE PRODUCTOS - CORREGIDOS
+        // ==============================================
+
+        // Manejar envío del formulario de producto - CORREGIDO
+        async function handleProductSubmit() {
+            const form = document.getElementById('productForm');
+            const saveBtn = document.getElementById('saveProduct');
+            const saveText = document.getElementById('saveProductText');
+            const saveSpinner = document.getElementById('saveProductSpinner');
+            
+            // Validación manual más flexible
+            const productName = document.getElementById('productName').value.trim();
+            const productCategory = document.getElementById('productCategory').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productStock = document.getElementById('productStock').value;
+            const productImage = document.getElementById('productImage').value.trim();
+            
+            // Validar campos requeridos
+            if (!productName) {
+                showMessage('⚠️ El nombre del producto es requerido', 'warning');
+                document.getElementById('productName').focus();
+                return;
+            }
+            
+            if (!productCategory) {
+                showMessage('⚠️ La categoría es requerida', 'warning');
+                document.getElementById('productCategory').focus();
+                return;
+            }
+            
+            if (!productPrice || parseFloat(productPrice) <= 0) {
+                showMessage('⚠️ El precio debe ser mayor a 0', 'warning');
+                document.getElementById('productPrice').focus();
+                return;
+            }
+            
+            if (!productStock || parseInt(productStock) < 0) {
+                showMessage('⚠️ El stock no puede ser negativo', 'warning');
+                document.getElementById('productStock').focus();
+                return;
+            }
+            
+            if (!productImage) {
+                showMessage('⚠️ La imagen principal es requerida', 'warning');
+                document.getElementById('productImage').focus();
+                return;
+            }
+            
+            // Mostrar loading
+            saveText.classList.add('d-none');
+            saveSpinner.classList.remove('d-none');
+            saveBtn.disabled = true;
+            
+            try {
+                // Obtener datos del formulario
+                const formData = {
+                    name: productName,
+                    category: productCategory,
+                    price: parseFloat(productPrice),
+                    stock: parseInt(productStock),
+                    description: document.getElementById('productDescription').value.trim(),
+                    image: productImage
+                };
+                
+                // Agregar campos opcionales
+                const subcategory = document.getElementById('productSubcategory').value;
+                const size = document.getElementById('productSize').value;
+                const color = document.getElementById('productColor').value.trim();
+                const material = document.getElementById('productMaterial').value.trim();
+                
+                if (subcategory && subcategory !== '') {
+                    formData.subcategory = subcategory;
+                }
+                if (size && size !== '' && size !== 'personalizada') {
+                    formData.size = size;
+                }
+                if (color) {
+                    formData.color = color;
+                }
+                if (material) {
+                    formData.material = material;
+                }
+                
+                // Agregar imágenes adicionales
+                const additionalImages = [];
+                document.querySelectorAll('#additionalImagesContainer input').forEach(input => {
+                    if (input.value.trim()) {
+                        additionalImages.push(input.value.trim());
+                    }
+                });
+                if (additionalImages.length > 0) {
+                    formData.additional_images = additionalImages;
+                }
+                
+                const productId = document.getElementById('productId').value;
+                const url = productId ? `/products/api/products/${productId}` : '/products/api/products';
+                const method = productId ? 'PUT' : 'POST';
+                
+                console.log('Enviando datos:', formData); // Para debug
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    showAlert('success', data.message);
-                    loadCategories();
+                    showMessage(`✅ ${data.message}`, 'success');
+                    $('#productoModal').modal('hide');
+                    await loadProducts();
                 } else {
-                    showAlert('danger', data.error);
+                    showMessage(`❌ Error: ${data.message}`, 'error');
                 }
             } catch (error) {
-                console.error('Error toggling category status:', error);
-                showAlert('danger', 'Error al cambiar el estado de la categoría');
+                console.error('Error guardando producto:', error);
+                showMessage('❌ Error de conexión al guardar el producto', 'error');
+            } finally {
+                saveText.classList.remove('d-none');
+                saveSpinner.classList.add('d-none');
+                saveBtn.disabled = false;
             }
         }
 
-        // Eliminar categoría
-        async function deleteCategory(id) {
+        // Resetear formulario de producto
+        function resetProductForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productSubcategory').innerHTML = '<option value="">Primero selecciona una categoría</option>';
+            document.getElementById('productSize').innerHTML = '<option value="">Seleccionar talla...</option>';
+            document.getElementById('additionalImagesContainer').innerHTML = `
+                <div class="additional-image-input input-group mb-2">
+                    <input type="url" class="form-control" placeholder="https://ejemplo.com/imagen2.jpg" data-image-index="1">
+                    <button type="button" class="btn btn-outline-danger" onclick="removeImageField(this)">×</button>
+                </div>
+            `;
+            document.getElementById('imagePreviews').innerHTML = '';
+            document.getElementById('productoModalLabel').textContent = 'Agregar Nuevo Producto';
+            document.getElementById('saveProductText').textContent = 'Guardar Producto';
+            imageCounter = 1;
+        }
+
+        // Cargar productos
+        async function loadProducts() {
             try {
-                const response = await fetch(`/api/categories/${id}`, {
+                const response = await fetch('/products/api/products');
+                const products = await response.json();
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error cargando productos:', error);
+                document.getElementById('products-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-danger">
+                            Error cargando productos
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Renderizar productos
+        function renderProducts(products) {
+            const tbody = document.getElementById('products-table-body');
+            
+            if (!products || products.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No hay productos registrados
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            products.forEach(product => {
+                const additionalInfo = [];
+                if (product.size && product.size !== 'Única') {
+                    additionalInfo.push(`Talla: ${product.size}`);
+                }
+                if (product.color) {
+                    additionalInfo.push(`Color: ${product.color}`);
+                }
+                
+                const additionalInfoHtml = additionalInfo.length > 0 
+                    ? `<br><small class="text-muted">${additionalInfo.join(' | ')}</small>` 
+                    : '';
+                
+                html += `
+                    <tr>
+                        <td>${product.id}</td>
+                        <td>
+                            ${product.image_url ? 
+                                `<img src="${product.image_url}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;" class="rounded">` : 
+                                '<span class="text-muted">Sin imagen</span>'
+                            }
+                        </td>
+                        <td>
+                            <strong>${escapeHtml(product.name)}</strong>
+                            ${additionalInfoHtml}
+                        </td>
+                        <td>${escapeHtml(product.category)}</td>
+                        <td>$${product.price.toFixed(2)}</td>
+                        <td>
+                            <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
+                                ${product.stock}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge ${product.status === 'Activo' ? 'bg-success' : 'bg-danger'}">
+                                ${product.status}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary" onclick="editProduct(${product.id})">
+                                    ✏️ Editar
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="deleteProduct(${product.id})">
+                                    🗑️ Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+
+        // Editar producto
+        async function editProduct(productId) {
+            try {
+                const response = await fetch(`/products/api/products/${productId}`);
+                const product = await response.json();
+                
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category;
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productStock').value = product.stock;
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productImage').value = product.image_url || '';
+                
+                if (product.size) {
+                    document.getElementById('productSize').value = product.size;
+                }
+                if (product.color) {
+                    document.getElementById('productColor').value = product.color;
+                }
+                if (product.material) {
+                    document.getElementById('productMaterial').value = product.material;
+                }
+                
+                await loadSubcategoriesAndSizes(product.category);
+                
+                setTimeout(() => {
+                    if (product.subcategory) {
+                        document.getElementById('productSubcategory').value = product.subcategory;
+                    }
+                }, 500);
+
+                // Cargar imágenes adicionales si existen
+                if (product.additional_images && product.additional_images.length > 0) {
+                    const container = document.getElementById('additionalImagesContainer');
+                    container.innerHTML = '';
+                    product.additional_images.forEach((imgUrl, index) => {
+                        const newField = document.createElement('div');
+                        newField.className = 'additional-image-input input-group mb-2';
+                        newField.innerHTML = `
+                            <input type="url" class="form-control" value="${imgUrl}" data-image-index="${index + 1}">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeImageField(this)">×</button>
+                        `;
+                        container.appendChild(newField);
+                    });
+                    imageCounter = product.additional_images.length;
+                }
+                
+                updateImagePreviews();
+                document.getElementById('productoModalLabel').textContent = 'Editar Producto';
+                document.getElementById('saveProductText').textContent = 'Actualizar Producto';
+                $('#productoModal').modal('show');
+                
+            } catch (error) {
+                console.error('Error cargando producto para editar:', error);
+                showMessage('❌ Error cargando datos del producto', 'error');
+            }
+        }
+
+        // Eliminar producto
+        async function deleteProduct(productId) {
+            if (!confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/products/api/products/${productId}`, {
                     method: 'DELETE'
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    showAlert('success', data.message);
-                    loadCategories();
+                    showMessage('✅ Producto eliminado correctamente', 'success');
+                    await loadProducts();
                 } else {
-                    showAlert('danger', data.error);
+                    showMessage(`❌ Error: ${data.message}`, 'error');
                 }
             } catch (error) {
-                console.error('Error deleting category:', error);
-                showAlert('danger', 'Error al eliminar la categoría');
+                console.error('Error eliminando producto:', error);
+                showMessage('❌ Error eliminando producto', 'error');
             }
         }
 
-        // Guardar categoría editada
-        async function saveEditedCategory() {
-            const id = document.getElementById('editCategoryId').value;
-            const name = document.getElementById('editCategoryName').value.trim();
-            const description = document.getElementById('editCategoryDescription').value.trim();
-            const status = document.getElementById('editCategoryStatus').value;
-            
-            if (!name) {
-                showAlert('warning', 'El nombre de la categoría es requerido');
-                return;
+        // ==============================================
+        // FUNCIONES UTILITARIAS
+        // ==============================================
+
+        // Mostrar mensaje
+        function showMessage(text, type = 'error') {
+            let messageDiv = document.getElementById('message');
+            if (!messageDiv) {
+                messageDiv = document.createElement('div');
+                messageDiv.id = 'message';
+                messageDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 10000;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: bold;
+                    max-width: 400px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                `;
+                document.body.appendChild(messageDiv);
             }
             
-            try {
-                const response = await fetch(`/api/categories/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        nameCategory: name,
-                        description: description,
-                        status: status
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    showAlert('success', data.message);
-                    loadCategories();
-                    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
-                } else {
-                    showAlert('danger', data.error);
-                }
-            } catch (error) {
-                console.error('Error updating category:', error);
-                showAlert('danger', 'Error al actualizar la categoría');
+            const colors = {
+                success: '#28a745',
+                error: '#dc3545',
+                warning: '#ffc107',
+                info: '#17a2b8'
+            };
+            
+            messageDiv.style.backgroundColor = colors[type] || colors.error;
+            messageDiv.innerHTML = text;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Mostrar estado de carga
+        function showLoading(containerId, text = 'Cargando...') {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.innerHTML = `
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2">${text}</p>
+                    </div>
+                `;
             }
         }
 
-        // Inicializar la aplicación
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cargar categorías al iniciar
-            loadCategories();
-            
-            // Manejar envío del formulario de nueva categoría
-            document.getElementById('categoriaForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const nombre = document.getElementById('categoriaNombre').value.trim();
-                const descripcion = document.getElementById('categoriaDescripcion').value.trim();
-                
-                if (!nombre) {
-                    showAlert('warning', 'Por favor, ingrese un nombre para la categoría.');
-                    return;
-                }
-                
-                // Mostrar spinner de carga
-                document.getElementById('saveCategoryText').classList.add('d-none');
-                document.getElementById('saveCategorySpinner').classList.remove('d-none');
-                document.getElementById('saveCategoryBtn').disabled = true;
-                
-                try {
-                    const response = await fetch('/api/categories', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            nameCategory: nombre,
-                            description: descripcion
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        showAlert('success', data.message);
-                        document.getElementById('categoriaForm').reset();
-                        loadCategories();
-                    } else {
-                        showAlert('danger', data.error);
-                    }
-                } catch (error) {
-                    console.error('Error saving category:', error);
-                    showAlert('danger', 'Error al guardar la categoría');
-                } finally {
-                    // Ocultar spinner
-                    document.getElementById('saveCategoryText').classList.remove('d-none');
-                    document.getElementById('saveCategorySpinner').classList.add('d-none');
-                    document.getElementById('saveCategoryBtn').disabled = false;
-                }
-            });
-            
-            // Manejar guardar categoría editada
-            document.getElementById('saveEditCategory').addEventListener('click', saveEditedCategory);
-            
-            // Manejar confirmación de acciones
-            document.getElementById('confirmAction').addEventListener('click', function() {
-                if (currentAction) {
-                    currentAction();
-                    bootstrap.Modal.getInstance(document.getElementById('confirmModal')).hide();
-                }
-            });
-        });
+        // Escapar HTML para seguridad
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .toString()
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
     </script>
 </body>
 </html>
-        <!-- Sección de Usuarios -->
+
+<!-- Sección de Usuarios -->
         <div id="usuarios" class="content-section">
             <!-- Encabezado -->
             <div class="section-header">
@@ -2466,184 +3455,1206 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-        <!-- Otras secciones (pedidos, reportes, configuración) -->
-        <div id="pedidos" class="content-section">
-            <h2>Gestión de Pedidos</h2>
-            <p>Contenido de la sección de pedidos...</p>
-        </div>
-
-        <div id="reportes" class="content-section">
-            <h2>Reportes y Análisis</h2>
-          <div class="row mb-4">
-                    <div class="col-md-3">
-                        <label class="form-label">Fecha Inicio</label>
-                        <input type="date" class="form-control" id="reportStartDate">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Fecha Fin</label>
-                        <input type="date" class="form-control" id="reportEndDate">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Tipo de Reporte</label>
-                        <select class="form-select" id="reportType">
-                            <option value="ventas">Ventas</option>
-                            <option value="productos">Productos</option>
-                            <option value="clientes">Clientes</option>
-                            <option value="inventario">Inventario</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button class="btn btn-primary w-100" id="generateReport">
-                            <i class="bi bi-gear me-2"></i>Generar Reporte
+  <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 ml-sm-auto px-4">
+                
+               <!-- Sección de Pedidos -->
+                <div id="pedidos" class="content-section active">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Gestión de Pedidos</h2>
+                        <button class="btn btn-primary" onclick="loadOrders()">
+                            <i class="fas fa-sync-alt me-2"></i>Actualizar
                         </button>
                     </div>
-                </div>
-
-                <!-- Botones de Exportación -->
-                <div class="d-flex gap-2 mb-4">
-                    <button class="btn btn-success" id="exportExcel">
-                        <i class="bi bi-file-earmark-excel me-2"></i>Exportar a Excel
-                    </button>
-                    <button class="btn btn-primary" id="exportWord">
-                        <i class="bi bi-file-earmark-word me-2"></i>Exportar a Word
-                    </button>
-                    <button class="btn btn-danger" id="exportPDF">
-                        <i class="bi bi-file-earmark-pdf me-2"></i>Exportar a PDF
-                    </button>
-                </div>
-
-                <!-- Resultados del Reporte -->
-                <div id="reportResults">
-                    <div class="text-center py-5">
-                        <i class="bi bi-graph-up display-4 text-muted"></i>
-                        <h4 class="mt-3 text-muted">Selecciona los filtros y genera un reporte</h4>
-                        <p class="text-muted">Los datos se mostrarán aquí después de generar el reporte</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
- <!-- Configuración Section -->
-<div id="configuracion" class="content-section">
-    <div class="container-fluid px-4">
-        <h2 class="mb-4">Configuración del Sistema</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0"><i class="bi bi-shop me-2"></i>Configuración de la Tienda</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre de la Tienda</label>
-                            <input type="text" class="form-control" value="Fashion Boutique">
+                    
+                    <!-- Filtros -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <select class="form-select" id="filterStatus" onchange="loadOrders()">
+                                <option value="all">Todos los estados</option>
+                                <option value="Pendiente">Pendientes</option>
+                                <option value="Procesando">Procesando</option>
+                                <option value="Enviado">Enviados</option>
+                                <option value="Completado">Completados</option>
+                                <option value="Cancelado">Cancelados</option>
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">NIT/RUC</label>
-                            <input type="text" class="form-control" value="900.123.456-7">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Dirección</label>
-                            <textarea class="form-control" rows="2">Cra 45 #26-85, Medellín</textarea>
-                        </div>
-                        <button class="btn btn-primary">Guardar Cambios</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Configuración de Facturación</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Resolución DIAN</label>
-                            <input type="text" class="form-control" value="18764000000001">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Prefijo Factura</label>
-                            <input type="text" class="form-control" value="FACT">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Número Inicial</label>
-                            <input type="number" class="form-control" value="1">
-                        </div>
-                        <button class="btn btn-primary">Actualizar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0"><i class="bi bi-printer me-2"></i>Configuración de Impresión</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="printAuto" checked>
-                            <label class="form-check-label" for="printAuto">Impresión Automática</label>
-                        </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="printCopy" checked>
-                            <label class="form-check-label" for="printCopy">Imprimir Copia Cliente</label>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tamaño de Papel</label>
-                            <select class="form-select">
-                                <option>Térmico 80mm</option>
-                                <option>A4</option>
-                                <option>Carta</option>
+                        <div class="col-md-4">
+                            <select class="form-select" id="filterPayment" onchange="loadOrders()">
+                                <option value="all">Todos los métodos</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                                <option value="PSE">PSE</option>
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0"><i class="bi bi-bell me-2"></i>Notificaciones</h5>
+                    <!-- Tabla de Pedidos -->
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID Pedido</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+                                    <th>Método Pago</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Items</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <tr>
+                                    <td colspan="8" class="text-center">Cargando pedidos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="card-body">
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="notifStock" checked>
-                            <label class="form-check-label" for="notifStock">Alertas de Stock Bajo</label>
+
+                    <!-- Estadísticas -->
+                    <div class="row mt-4">
+                        <div class="col-md-3">
+                            <div class="card text-white bg-primary stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="totalOrders">0</h5>
+                                    <p class="card-text">Total Pedidos</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="notifSales" checked>
-                            <label class="form-check-label" for="notifSales">Resumen de Ventas Diarias</label>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-warning stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="pendingOrders">0</h5>
+                                    <p class="card-text">Pendientes</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="notifOrders">
-                            <label class="form-check-label" for="notifOrders">Notificaciones de Pedidos Online</label>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-success stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="totalRevenue">$0</h5>
+                                    <p class="card-text">Ingresos Totales</p>
+                                </div>
+                            </div>
                         </div>
-                        <button class="btn btn-primary">Guardar Preferencias</button>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-info stats-card">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="cashOrders">0</h5>
+                                    <p class="card-text">Pedidos Efectivo</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-  
-        
+
+    <!-- Modal para confirmar cambio de estado -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Cambiar Estado del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage">¿Está seguro de cambiar el estado del pedido?</p>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="sendEmailCheckbox" checked>
+                        <label class="form-check-label" for="sendEmailCheckbox">
+                            Notificar al cliente por correo electrónico
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmStatusChange">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables globales para el modal
+        let currentOrderId = null;
+        let currentNewStatus = null;
+        const statusModal = new bootstrap.Modal(document.getElementById('statusModal'));
+
+        // Función para cambiar entre secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Actualizar navegación activa
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Si es la sección de pedidos, cargar los pedidos
+            if (sectionId === 'pedidos') {
+                loadOrders();
+            }
+        }
+
+        // Cargar pedidos al abrir la sección
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrders();
+            
+            // Configurar el botón de confirmación del modal
+            document.getElementById('confirmStatusChange').addEventListener('click', function() {
+                const sendEmail = document.getElementById('sendEmailCheckbox').checked;
+                updateOrderStatus(currentOrderId, currentNewStatus, sendEmail);
+                statusModal.hide();
+            });
+        });
+
+        async function loadOrders() {
+            try {
+                document.getElementById('ordersTable').innerHTML = 
+                    '<tr><td colspan="8" class="text-center">Cargando pedidos...</td></tr>';
+                
+                const statusFilter = document.getElementById('filterStatus').value;
+                const paymentFilter = document.getElementById('filterPayment').value;
+                
+                let url = '/admin/get_orders';
+                const params = new URLSearchParams();
+                
+                if (statusFilter !== 'all') params.append('status', statusFilter);
+                if (paymentFilter !== 'all') params.append('payment', paymentFilter);
+                
+                if (params.toString()) url += '?' + params.toString();
+                
+                const response = await fetch(url);
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayOrders(result.orders);
+                    updateStatistics(result.orders);
+                } else {
+                    throw new Error(result.message);
+                }
+                
+            } catch (error) {
+                console.error('Error cargando pedidos:', error);
+                document.getElementById('ordersTable').innerHTML = 
+                    '<tr><td colspan="8" class="text-center text-danger">Error cargando pedidos: ' + error.message + '</td></tr>';
+            }
+        }
+
+        function displayOrders(orders) {
+            const tbody = document.getElementById('ordersTable');
+            
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center">No hay pedidos registrados</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td><strong>#${order.id}</strong></td>
+                    <td>${order.customer_name} (ID: ${order.user_id})</td>
+                    <td><strong>$${order.total.toFixed(2)}</strong></td>
+                    <td>
+                        <span class="badge ${order.payment_method === 'Efectivo' ? 'bg-warning' : order.payment_method === 'Tarjeta' ? 'bg-success' : 'bg-info'}">
+                            ${order.payment_method}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge order-status-badge ${getStatusBadgeClass(order.status)}">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td>${order.created_at ? new Date(order.created_at).toLocaleDateString('es-ES') : 'N/A'}</td>
+                    <td>${order.items_count} ${order.items_count === 1 ? 'item' : 'items'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails(${order.id})" title="Ver detalles">
+                                <i class="fas fa-eye me-1"></i>Ver
+                            </button>
+                            <button class="btn btn-sm btn-outline-success" onclick="confirmStatusChange(${order.id}, 'Procesando')" title="Marcar como Procesando">
+                                <i class="fas fa-cog me-1"></i>Procesar
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" onclick="confirmStatusChange(${order.id}, 'Enviado')" title="Marcar como Enviado">
+                                <i class="fas fa-shipping-fast me-1"></i>Enviar
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning" onclick="confirmStatusChange(${order.id}, 'Completado')" title="Marcar como Completado">
+                                <i class="fas fa-check me-1"></i>Completar
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="confirmStatusChange(${order.id}, 'Cancelado')" title="Cancelar pedido">
+                                <i class="fas fa-times me-1"></i>Cancelar
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getStatusBadgeClass(status) {
+            const classes = {
+                'Pendiente': 'bg-warning',
+                'Procesando': 'bg-info',
+                'Enviado': 'bg-primary',
+                'Completado': 'bg-success',
+                'Cancelado': 'bg-danger'
+            };
+            return classes[status] || 'bg-secondary';
+        }
+
+        function updateStatistics(orders) {
+            const totalOrders = orders.length;
+            const pendingOrders = orders.filter(order => order.status === 'Pendiente').length;
+            const cashOrders = orders.filter(order => order.payment_method === 'Efectivo').length;
+            const totalRevenue = orders
+                .filter(order => order.status === 'Completado')
+                .reduce((sum, order) => sum + order.total, 0);
+            
+            document.getElementById('totalOrders').textContent = totalOrders;
+            document.getElementById('pendingOrders').textContent = pendingOrders;
+            document.getElementById('cashOrders').textContent = cashOrders;
+            document.getElementById('totalRevenue').textContent = `$${totalRevenue.toFixed(2)}`;
+        }
+
+        // Función para mostrar el modal de confirmación
+        function confirmStatusChange(orderId, newStatus) {
+            currentOrderId = orderId;
+            currentNewStatus = newStatus;
+            
+            const statusMessages = {
+                'Procesando': 'procesando',
+                'Enviado': 'enviado',
+                'Completado': 'completado',
+                'Cancelado': 'cancelado'
+            };
+            
+            document.getElementById('modalMessage').textContent = 
+                `¿Está seguro de cambiar el estado del pedido #${orderId} a "${newStatus}"?`;
+            
+            statusModal.show();
+        }
+
+        async function updateOrderStatus(orderId, newStatus, sendEmail = true) {
+            try {
+                const response = await fetch('/admin/update_order_status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        order_id: orderId, 
+                        new_status: newStatus,
+                        send_email: sendEmail
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Mostrar notificación de éxito
+                    showNotification(`Estado del pedido #${orderId} actualizado a "${newStatus}"`, 'success');
+                    
+                    // Si se envió el correo, mostrar mensaje adicional
+                    if (sendEmail && result.email_sent) {
+                        showNotification(`Correo de notificación enviado al cliente`, 'info');
+                    }
+                    
+                    loadOrders(); // Recargar la lista
+                } else {
+                    showNotification('Error: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al actualizar el pedido', 'error');
+            }
+        }
+
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-eliminar después de 5 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        function viewOrderDetails(orderId) {
+            window.location.href = '/admin/order/' + orderId;
+        }
+    </script>
+</body>
+</html>
+
+<div class="container mt-4 mb-5">
+
+        <div id="reportes" class="content-section">
+            <h2>Reportes y Análisis</h2>
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Inicio</label>
+                    <input type="date" class="form-control" id="reportStartDate">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Fin</label>
+                    <input type="date" class="form-control" id="reportEndDate">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Tipo de Reporte</label>
+                    <select class="form-select" id="reportType">
+                        <option value="ventas">Ventas</option>
+                        <option value="productos">Productos</option>
+                        <option value="clientes">Clientes</option>
+                        <option value="inventario">Inventario</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" id="generateReport">
+                        <i class="bi bi-gear me-2"></i>Generar Reporte
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botones de Exportación -->
+            <div class="d-flex gap-2 mb-4">
+                <button class="btn btn-success" id="exportExcel">
+                    <i class="bi bi-file-earmark-excel me-2"></i>Exportar a Excel
+                </button>
+                <button class="btn btn-primary" id="exportWord">
+                    <i class="bi bi-file-earmark-word me-2"></i>Exportar a Word
+                </button>
+                <button class="btn btn-danger" id="exportPDF">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>Exportar a PDF
+                </button>
+            </div>
+
+            <!-- Resultados del Reporte -->
+            <div id="reportResults">
+                <div class="text-center py-5">
+                    <i class="bi bi-graph-up display-4 text-muted"></i>
+                    <h4 class="mt-3 text-muted">Selecciona los filtros y genera un reporte</h4>
+                    <p class="text-muted">Los datos se mostrarán aquí después de generar el reporte</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuración Section -->
+        <div id="configuracion" class="content-section">
+            <div class="container-fluid px-4">
+                <h2 class="mb-4">Configuración del Sistema</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0"><i class="bi bi-shop me-2"></i>Configuración de la Tienda</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre de la Tienda</label>
+                                    <input type="text" class="form-control" id="storeName" value="Fashion Boutique">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">NIT/RUC</label>
+                                    <input type="text" class="form-control" id="storeNIT" value="900.123.456-7">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Dirección</label>
+                                    <textarea class="form-control" id="storeAddress" rows="2">Cra 45 #26-85, Medellín</textarea>
+                                </div>
+                                <button class="btn btn-primary" id="saveStoreConfig">Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0"><i class="bi bi-receipt me-2"></i>Configuración de Facturación</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Resolución DIAN</label>
+                                    <input type="text" class="form-control" id="dianResolution" value="18764000000001">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Prefijo Factura</label>
+                                    <input type="text" class="form-control" id="invoicePrefix" value="FACT">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Número Inicial</label>
+                                    <input type="number" class="form-control" id="initialNumber" value="1">
+                                </div>
+                                <button class="btn btn-primary" id="saveBillingConfig">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0"><i class="bi bi-printer me-2"></i>Configuración de Impresión</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="printAuto" checked>
+                                    <label class="form-check-label" for="printAuto">Impresión Automática</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="printCopy" checked>
+                                    <label class="form-check-label" for="printCopy">Imprimir Copia Cliente</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tamaño de Papel</label>
+                                    <select class="form-select" id="paperSize">
+                                        <option>Térmico 80mm</option>
+                                        <option>A4</option>
+                                        <option>Carta</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" id="savePrintingConfig">Guardar Configuración</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header bg-dark text-white">
+                                <h5 class="mb-0"><i class="bi bi-bell me-2"></i>Notificaciones</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifStock" checked>
+                                    <label class="form-check-label" for="notifStock">Alertas de Stock Bajo</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifSales" checked>
+                                    <label class="form-check-label" for="notifSales">Resumen de Ventas Diarias</label>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="notifOrders">
+                                    <label class="form-check-label" for="notifOrders">Notificaciones de Pedidos Online</label>
+                                </div>
+                                <button class="btn btn-primary" id="saveNotificationsConfig">Guardar Preferencias</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Cierre del div.main-content -->
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
+        // Funcionalidad para Reportes
+document.addEventListener('DOMContentLoaded', function() {
+    const generateReportBtn = document.getElementById('generateReport');
+    const exportExcelBtn = document.getElementById('exportExcel');
+    const exportWordBtn = document.getElementById('exportWord');
+    const exportPDFBtn = document.getElementById('exportPDF');
+    
+    let currentReportData = null;
+    let currentReportType = null;
+    let currentStartDate = null;
+    let currentEndDate = null;
+
+    // Generar Reporte
+    generateReportBtn.addEventListener('click', generateReport);
+
+    // Exportar a Excel
+    exportExcelBtn.addEventListener('click', function() {
+        exportReport('excel');
+    });
+
+    // Exportar a Word
+    exportWordBtn.addEventListener('click', function() {
+        exportReport('word');
+    });
+
+    // Exportar a PDF
+    exportPDFBtn.addEventListener('click', function() {
+        exportReport('pdf');
+    });
+
+    async function generateReport() {
+        const startDate = document.getElementById('reportStartDate').value;
+        const endDate = document.getElementById('reportEndDate').value;
+        const reportType = document.getElementById('reportType').value;
+
+        if (!startDate || !endDate) {
+            showAlert('Por favor selecciona ambas fechas', 'warning');
+            return;
+        }
+
+        if (new Date(startDate) > new Date(endDate)) {
+            showAlert('La fecha de inicio no puede ser mayor a la fecha fin', 'warning');
+            return;
+        }
+
+        try {
+            generateReportBtn.innerHTML = '<i class="bi bi-gear me-2"></i>Generando...';
+            generateReportBtn.disabled = true;
+
+            const response = await fetch('/api/reports/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    report_type: reportType,
+                    start_date: startDate,
+                    end_date: endDate
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                currentReportData = result.data;
+                currentReportType = reportType;
+                currentStartDate = startDate;
+                currentEndDate = endDate;
+                
+                displayReportResults(result.data, reportType);
+                showAlert(`Reporte generado exitosamente. ${result.total_records} registros encontrados.`, 'success');
+            } else {
+                showAlert('Error al generar el reporte: ' + result.error, 'error');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('Error al generar el reporte', 'error');
+        } finally {
+            generateReportBtn.innerHTML = '<i class="bi bi-gear me-2"></i>Generar Reporte';
+            generateReportBtn.disabled = false;
+        }
+    }
+
+    function displayReportResults(data, reportType) {
+        const resultsContainer = document.getElementById('reportResults');
+        
+        if (!data.data || data.data.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="bi bi-search display-4 text-muted"></i>
+                    <h4 class="mt-3 text-muted">No se encontraron datos</h4>
+                    <p class="text-muted">No hay registros para el período y tipo de reporte seleccionado</p>
+                </div>
+            `;
+            return;
+        }
+
+        let tableHeaders = '';
+        let tableRows = '';
+
+        // Definir encabezados y formato según el tipo de reporte
+        switch(reportType) {
+            case 'ventas':
+                tableHeaders = `
+                    <th>N° Factura</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Método Pago</th>
+                    <th>Subtotal</th>
+                    <th>Impuestos</th>
+                    <th>Descuentos</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                `;
+                
+                data.data.forEach(item => {
+                    tableRows += `
+                        <tr>
+                            <td>${item.numero_factura}</td>
+                            <td>${item.fecha}</td>
+                            <td>${item.cliente}</td>
+                            <td>${item.metodo_pago}</td>
+                            <td>$${item.subtotal.toLocaleString()}</td>
+                            <td>$${item.impuestos.toLocaleString()}</td>
+                            <td>$${item.descuentos.toLocaleString()}</td>
+                            <td><strong>$${item.total.toLocaleString()}</strong></td>
+                            <td><span class="badge ${getStatusBadgeClass(item.estado)}">${item.estado}</span></td>
+                        </tr>
+                    `;
+                });
+                break;
+
+            case 'productos':
+                tableHeaders = `
+                    <th>Producto</th>
+                    <th>ID</th>
+                    <th>Unidades Vendidas</th>
+                    <th>Total Ingresos</th>
+                `;
+                
+                data.data.forEach(item => {
+                    tableRows += `
+                        <tr>
+                            <td>${item.producto}</td>
+                            <td>${item.id_producto}</td>
+                            <td>${item.unidades_vendidas.toLocaleString()}</td>
+                            <td><strong>$${item.total_ingresos.toLocaleString()}</strong></td>
+                        </tr>
+                    `;
+                });
+                break;
+
+            case 'clientes':
+                tableHeaders = `
+                    <th>Cliente</th>
+                    <th>Email</th>
+                    <th>Identificación</th>
+                    <th>Total Compras</th>
+                    <th>Total Gastado</th>
+                `;
+                
+                data.data.forEach(item => {
+                    tableRows += `
+                        <tr>
+                            <td>${item.cliente}</td>
+                            <td>${item.email}</td>
+                            <td>${item.identificacion}</td>
+                            <td>${item.total_compras}</td>
+                            <td><strong>$${item.total_gastado.toLocaleString()}</strong></td>
+                        </tr>
+                    `;
+                });
+                break;
+
+            case 'inventario':
+                tableHeaders = `
+                    <th>Producto</th>
+                    <th>ID</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock Actual</th>
+                    <th>Estado</th>
+                    <th>Valor Total</th>
+                `;
+                
+                data.data.forEach(item => {
+                    tableRows += `
+                        <tr>
+                            <td>${item.producto}</td>
+                            <td>${item.id_producto}</td>
+                            <td>${item.categoria}</td>
+                            <td>$${item.precio.toLocaleString()}</td>
+                            <td>${item.stock_actual}</td>
+                            <td><span class="badge ${getInventoryStatusBadgeClass(item.estado_inventario)}">${item.estado_inventario}</span></td>
+                            <td><strong>$${item.valor_total.toLocaleString()}</strong></td>
+                        </tr>
+                    `;
+                });
+                break;
+        }
+
+        // Mostrar resumen si existe
+        let summaryHTML = '';
+        if (data.summary) {
+            summaryHTML = `
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Resumen del Reporte</h5>
+                                <div class="row">
+                                    ${generateSummaryCards(data.summary, reportType)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        resultsContainer.innerHTML = `
+            ${summaryHTML}
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Detalles del Reporte</h5>
+                    <span class="badge bg-primary">${data.data.length} registros</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>${tableHeaders}</tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function generateSummaryCards(summary, reportType) {
+        let cards = '';
+        
+        switch(reportType) {
+            case 'ventas':
+                cards = `
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Ventas</h6>
+                                <h4 class="card-text">$${summary.total_ventas.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Facturas</h6>
+                                <h4 class="card-text">${summary.total_facturas}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Promedio por Venta</h6>
+                                <h4 class="card-text">$${summary.promedio_venta.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'productos':
+                cards = `
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Productos</h6>
+                                <h4 class="card-text">${summary.total_productos}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Unidades Vendidas</h6>
+                                <h4 class="card-text">${summary.total_unidades_vendidas.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Ingresos Totales</h6>
+                                <h4 class="card-text">$${summary.ingresos_totales.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'clientes':
+                cards = `
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Clientes</h6>
+                                <h4 class="card-text">${summary.total_clientes}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Compras Totales</h6>
+                                <h4 class="card-text">${summary.compras_totales}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Ingresos por Clientes</h6>
+                                <h4 class="card-text">$${summary.ingresos_clientes.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+                
+            case 'inventario':
+                cards = `
+                    <div class="col-md-3">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Productos</h6>
+                                <h4 class="card-text">${summary.total_productos}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Productos Agotados</h6>
+                                <h4 class="card-text">${summary.productos_agotados}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-warning mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Bajo Stock</h6>
+                                <h4 class="card-text">${summary.productos_bajo_stock}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-body">
+                                <h6 class="card-title">Valor Inventario</h6>
+                                <h4 class="card-text">$${summary.valor_inventario_total.toLocaleString()}</h4>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break;
+        }
+        
+        return cards;
+    }
+
+    function getStatusBadgeClass(status) {
+        switch(status) {
+            case 'Activa': return 'bg-success';
+            case 'Anulada': return 'bg-danger';
+            case 'Enviada': return 'bg-info';
+            default: return 'bg-secondary';
+        }
+    }
+
+    function getInventoryStatusBadgeClass(status) {
+        switch(status) {
+            case 'Disponible': return 'bg-success';
+            case 'Bajo Stock': return 'bg-warning';
+            case 'Agotado': return 'bg-danger';
+            default: return 'bg-secondary';
+        }
+    }
+
+    async function exportReport(format) {
+        if (!currentReportData) {
+            showAlert('Primero debes generar un reporte', 'warning');
+            return;
+        }
+
+        try {
+            const exportBtn = document.getElementById(`export${format.toUpperCase()}`);
+            const originalText = exportBtn.innerHTML;
+            
+            exportBtn.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Exportando...';
+            exportBtn.disabled = true;
+
+            const response = await fetch(`/api/reports/export/${format}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    data: currentReportData.data,
+                    report_type: currentReportType,
+                    start_date: currentStartDate,
+                    end_date: currentEndDate
+                })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                
+                // Obtener el nombre del archivo del header Content-Disposition
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = `reporte_${currentReportType}.${format}`;
+                
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+                    if (filenameMatch) {
+                        filename = filenameMatch[1];
+                    }
+                }
+                
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+                showAlert('Archivo exportado exitosamente', 'success');
+            } else {
+                const error = await response.json();
+                showAlert('Error al exportar: ' + error.error, 'error');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('Error al exportar el archivo', 'error');
+        } finally {
+            const exportBtn = document.getElementById(`export${format.toUpperCase()}`);
+            exportBtn.innerHTML = originalText;
+            exportBtn.disabled = false;
+        }
+    }
+
+    function showAlert(message, type) {
+        // Usar tu sistema de alertas existente o implementar uno simple
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.querySelector('#reportes').insertBefore(alertDiv, document.querySelector('#reportes .row'));
+        
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+
+    // Establecer fechas por defecto (últimos 30 días)
+    const today = new Date();
+    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    
+    document.getElementById('reportStartDate').value = lastMonth.toISOString().split('T')[0];
+    document.getElementById('reportEndDate').value = today.toISOString().split('T')[0];
+});
         // Navegación entre secciones
         document.addEventListener('DOMContentLoaded', function() {
             // ==============================================
-            // FUNCIONALIDADES DE LA INTERFAZ (ACTUALIZADO PARA MYSQL)
+            // FUNCIONALIDADES DE CONFIGURACIÓN
+            // ==============================================
+
+            // Cargar configuración al abrir la sección
+            async function loadConfiguration() {
+                try {
+                    const response = await fetch('/api/config');
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        const config = result.config;
+                        fillConfigurationForms(config);
+                        showNotification('Configuración cargada correctamente', 'success');
+                    } else {
+                        showNotification('Error al cargar configuración: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión al cargar configuración', 'error');
+                }
+            }
+
+            // Llenar formularios con configuración
+            function fillConfigurationForms(config) {
+                // Configuración de la tienda
+                document.getElementById('storeName').value = config.store.name;
+                document.getElementById('storeNIT').value = config.store.nit;
+                document.getElementById('storeAddress').value = config.store.address;
+                
+                // Configuración de facturación
+                document.getElementById('dianResolution').value = config.billing.dian_resolution;
+                document.getElementById('invoicePrefix').value = config.billing.invoice_prefix;
+                document.getElementById('initialNumber').value = config.billing.initial_number;
+                
+                // Configuración de impresión
+                document.getElementById('printAuto').checked = config.printing.auto_print;
+                document.getElementById('printCopy').checked = config.printing.print_copy;
+                document.getElementById('paperSize').value = config.printing.paper_size;
+                
+                // Configuración de notificaciones
+                document.getElementById('notifStock').checked = config.notifications.low_stock;
+                document.getElementById('notifSales').checked = config.notifications.daily_sales;
+                document.getElementById('notifOrders').checked = config.notifications.online_orders;
+            }
+
+            // Configurar event listeners para configuración
+            function setupConfigurationListeners() {
+                document.getElementById('saveStoreConfig').addEventListener('click', saveStoreConfig);
+                document.getElementById('saveBillingConfig').addEventListener('click', saveBillingConfig);
+                document.getElementById('savePrintingConfig').addEventListener('click', savePrintingConfig);
+                document.getElementById('saveNotificationsConfig').addEventListener('click', saveNotificationsConfig);
+            }
+
+            // Guardar configuración de tienda
+            async function saveStoreConfig() {
+                try {
+                    const config = {
+                        name: document.getElementById('storeName').value,
+                        nit: document.getElementById('storeNIT').value,
+                        address: document.getElementById('storeAddress').value
+                    };
+                    
+                    const response = await fetch('/api/config/store', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(config)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification(result.message, 'success');
+                    } else {
+                        showNotification('Error: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión', 'error');
+                }
+            }
+
+            // Guardar configuración de facturación
+            async function saveBillingConfig() {
+                try {
+                    const config = {
+                        dian_resolution: document.getElementById('dianResolution').value,
+                        invoice_prefix: document.getElementById('invoicePrefix').value,
+                        initial_number: parseInt(document.getElementById('initialNumber').value)
+                    };
+                    
+                    const response = await fetch('/api/config/billing', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(config)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification(result.message, 'success');
+                    } else {
+                        showNotification('Error: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión', 'error');
+                }
+            }
+
+            // Guardar configuración de impresión
+            async function savePrintingConfig() {
+                try {
+                    const config = {
+                        auto_print: document.getElementById('printAuto').checked,
+                        print_copy: document.getElementById('printCopy').checked,
+                        paper_size: document.getElementById('paperSize').value
+                    };
+                    
+                    const response = await fetch('/api/config/printing', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(config)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification(result.message, 'success');
+                    } else {
+                        showNotification('Error: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión', 'error');
+                }
+            }
+
+            // Guardar configuración de notificaciones
+            async function saveNotificationsConfig() {
+                try {
+                    const config = {
+                        low_stock: document.getElementById('notifStock').checked,
+                        daily_sales: document.getElementById('notifSales').checked,
+                        online_orders: document.getElementById('notifOrders').checked
+                    };
+                    
+                    const response = await fetch('/api/config/notifications', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(config)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showNotification(result.message, 'success');
+                    } else {
+                        showNotification('Error: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('Error de conexión', 'error');
+                }
+            }
+
+            // Función para mostrar notificaciones
+            function showNotification(message, type) {
+                // Eliminar notificaciones existentes
+                const existingNotifications = document.querySelectorAll('.alert-notification');
+                existingNotifications.forEach(notification => notification.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `alert alert-${type} alert-notification alert-dismissible fade show`;
+                notification.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+                notification.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 4000);
+            }
+
+            // ==============================================
+            // FUNCIONALIDADES EXISTENTES (MANTENIENDO TU CÓDIGO)
             // ==============================================
 
             // Actualizar estadísticas del dashboard DESDE SERVIDOR
             async function updateDashboardStats() {
                 try {
-                    // Obtener estadísticas del servidor Flask
                     const response = await fetch('/api/dashboard/stats');
                     const stats = await response.json();
                     
@@ -2727,10 +4738,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Renderizar tabla de productos DESDE SERVIDOR MYSQL
             async function renderProductsTable() {
                 try {
-                    // OBTENER PRODUCTOS DEL SERVIDOR FLASK - TODOS LOS PRODUCTOS
                     const response = await fetch('/api/products');
                     
-                    // Verificar si la respuesta es exitosa
                     if (!response.ok) {
                         throw new Error(`Error del servidor: ${response.status}`);
                     }
@@ -2749,7 +4758,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         return; 
                     }
                     
-                    // MOSTRAR TODOS LOS PRODUCTOS (sin límite)
                     products.forEach(product => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
@@ -2772,7 +4780,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         productsTableBody.appendChild(row);
                     });
                     
-                    // Agregar event listeners a los botones de productos
                     attachProductEventListeners();
                 } catch (error) {
                     console.error('Error al cargar productos:', error);
@@ -2800,7 +4807,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Agregar event listeners a los botones de productos
             function attachProductEventListeners() {
-                // Botones de editar producto
                 document.querySelectorAll('.edit-product').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const productId = this.getAttribute('data-id');
@@ -2808,7 +4814,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 });
                 
-                // Botones de eliminar producto
                 document.querySelectorAll('.delete-product').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const productId = this.getAttribute('data-id');
@@ -2820,7 +4825,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Función para editar producto (OBTENER DESDE SERVIDOR)
             async function editProduct(id) {
                 try {
-                    // Obtener producto específico del servidor
                     const response = await fetch(`/api/products/${id}`);
                     
                     if (!response.ok) {
@@ -2852,7 +4856,6 @@ document.addEventListener('DOMContentLoaded', function() {
             async function deleteProductFromDB(id) {
                 if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
                     try {
-                        // Eliminar del servidor
                         const response = await fetch(`/api/products/${id}`, {
                             method: 'DELETE'
                         });
@@ -2875,7 +4878,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // GUARDAR PRODUCTO (ENVIAR A SERVIDOR MYSQL) - NUEVA FUNCIÓN
             // ==============================================
 
-            // Guardar producto (nuevo o editado) - ENVIAR A SERVIDOR
             document.getElementById('saveProduct').addEventListener('click', async function() {
                 const productId = document.getElementById('productId').value;
                 const name = document.getElementById('productName').value;
@@ -2885,19 +4887,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 const description = document.getElementById('productDescription').value;
                 const image = document.getElementById('productImage').value || 'https://via.placeholder.com/250x300/f8f9fa/000?text=' + encodeURIComponent(name);
                 
-                // Validaciones
                 if (!name || !category || isNaN(price) || isNaN(stock)) {
                     alert('Por favor, complete todos los campos obligatorios correctamente.');
                     return;
                 }
                 
-                // Mostrar indicador de carga
                 document.getElementById('saveProductText').classList.add('d-none');
                 document.getElementById('saveProductSpinner').classList.remove('d-none');
                 this.disabled = true;
                 
                 try {
-                    // ENVIAR AL SERVIDOR FLASK (MySQL)
                     const url = productId ? `/api/products/${productId}` : '/api/products';
                     const method = productId ? 'PUT' : 'POST';
                     
@@ -2923,12 +4922,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error(result.error || 'Error del servidor');
                     }
                     
-                    // Actualizar la tabla de productos
                     await renderProductsTable();
                     await updateDashboardStats();
                     await renderPopularProducts();
                     
-                    // Cerrar modal y resetear formulario
                     bootstrap.Modal.getInstance(document.getElementById('productoModal')).hide();
                     document.getElementById('productForm').reset();
                     document.getElementById('productId').value = '';
@@ -2939,14 +4936,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Error al guardar producto:', error);
                     alert('Error al guardar el producto: ' + error.message);
                 } finally {
-                    // Ocultar indicador de carga
                     document.getElementById('saveProductText').classList.remove('d-none');
                     document.getElementById('saveProductSpinner').classList.add('d-none');
                     this.disabled = false;
                 }
             });
                         
-            // Cuando se cierra el modal, resetear el formulario
             document.getElementById('productoModal').addEventListener('hidden.bs.modal', function() {
                 document.getElementById('productForm').reset();
                 document.getElementById('productId').value = '';
@@ -2966,36 +4961,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Obtener la sección objetivo
                     const targetSection = this.getAttribute('data-section');
                     
-                    // Actualizar clases activas
                     navLinks.forEach(navLink => navLink.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Ocultar todas las secciones y mostrar la objetivo
                     contentSections.forEach(section => section.classList.remove('active'));
                     document.getElementById(targetSection).classList.add('active');
                     
-                    // Actualizar título de la sección
                     const sectionName = this.querySelector('span').textContent;
                     sectionTitle.textContent = sectionName;
                     
-                    // Si es la sección de productos, renderizar la tabla
                     if (targetSection === 'productos') {
                         renderProductsTable();
-                    }
-                    
-                    // Si es la sección de dashboard, actualizar estadísticas
-                    if (targetSection === 'dashboard') {
+                    } else if (targetSection === 'dashboard') {
                         updateDashboardStats();
                         renderRecentOrders();
                         renderPopularProducts();
-                    }
-                    
-                    // Si es la sección de usuarios, cargar usuarios
-                    if (targetSection === 'usuarios') {
+                    } else if (targetSection === 'usuarios') {
                         loadUsers();
+                    } else if (targetSection === 'configuracion') {
+                        loadConfiguration(); // ← AGREGAR ESTA LÍNEA
+                        setupConfigurationListeners(); // ← Y ESTA LÍNEA
                     }
                 });
             });
@@ -3018,37 +5005,79 @@ document.addEventListener('DOMContentLoaded', function() {
                 userDropdown.classList.toggle('show');
             });
             
-            // Cerrar el dropdown al hacer clic fuera de él
             document.addEventListener('click', function(event) {
                 if (!event.target.closest('.user-dropdown')) {
                     userDropdown.classList.remove('show');
                 }
             });
             
-            // Funcionalidad de cierre de sesión
             const logoutButtons = document.querySelectorAll('#logout-sidebar, #logout-header');
             
             logoutButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                        // Redirigir a la página de cierre de sesión
                         window.location.href = "/logout";
                     }
                 });
             });
 
-        // ==============================================
-// CÓDIGO PARA GESTIÓN DE USUARIOS CON CONTRASEÑA DE SEGURIDAD
+            // ==============================================
+// BOTÓN NUEVO PRODUCTO - FIX
 // ==============================================
 
-// Contraseña de seguridad
-const SECURITY_PASSWORD = "1055127011Cd.";
+// Event listener para el botón "Nuevo Producto"
+document.getElementById('newProductBtn').addEventListener('click', function() {
+    // Resetear el formulario
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    document.getElementById('productoModalLabel').textContent = 'Agregar Nuevo Producto';
+    
+    // Cargar categorías si es necesario
+    loadCategoriesForModal();
+});
 
-// Función para verificar contraseña de seguridad
+// Función para cargar categorías en el modal
+async function loadCategoriesForModal() {
+    try {
+        const categorySelect = document.getElementById('productCategory');
+        
+        // Solo cargar si no tiene opciones
+        if (categorySelect.options.length <= 1) {
+            const response = await fetch('/api/categories');
+            const data = await response.json();
+            
+            if (data.success && data.categories) {
+                categorySelect.innerHTML = '<option value="">Seleccionar categoría</option>';
+                data.categories.forEach(category => {
+                    if (category.status === 'Activa') {
+                        const option = document.createElement('option');
+                        option.value = category.nameCategory;
+                        option.textContent = category.nameCategory;
+                        categorySelect.appendChild(option);
+                    }
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error cargando categorías:', error);
+    }
+}
+
+// Resetear formulario cuando se cierra el modal
+document.getElementById('productoModal').addEventListener('hidden.bs.modal', function() {
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    document.getElementById('productoModalLabel').textContent = 'Agregar Nuevo Producto';
+});
+
+           
+          // CÓDIGO PARA GESTIÓN DE USUARIOS CON CONTRASEÑA DE SEGURIDAD
+
+const SECURITY_PASSWORD = "2580";
+
 async function verifySecurityPassword(action = "realizar esta acción") {
     return new Promise((resolve) => {
-        // Crear modal de contraseña
         const passwordModal = document.createElement('div');
         passwordModal.className = 'modal fade';
         passwordModal.id = 'securityPasswordModal';
@@ -3083,7 +5112,6 @@ async function verifySecurityPassword(action = "realizar esta acción") {
         const passwordInput = document.getElementById('securityPasswordInput');
         const errorDiv = document.getElementById('passwordError');
         
-        // Función para verificar contraseña
         const verifyPassword = () => {
             if (passwordInput.value === SECURITY_PASSWORD) {
                 modal.hide();
@@ -3098,7 +5126,6 @@ async function verifySecurityPassword(action = "realizar esta acción") {
             }
         };
         
-        // Event listeners
         document.getElementById('confirmSecurityPassword').addEventListener('click', verifyPassword);
         
         passwordInput.addEventListener('keypress', (e) => {
@@ -3107,7 +5134,6 @@ async function verifySecurityPassword(action = "realizar esta acción") {
             }
         });
         
-        // Cuando se cierra el modal sin verificar
         passwordModal.addEventListener('hidden.bs.modal', () => {
             setTimeout(() => {
                 if (document.body.contains(passwordModal)) {
@@ -3121,6 +5147,10 @@ async function verifySecurityPassword(action = "realizar esta acción") {
         passwordInput.focus();
     });
 }
+
+// Variable global para controlar si ya se verificó la contraseña
+let passwordVerified = false;
+let currentAction = '';
 
 // Función para cargar usuarios
 async function loadUsers() {
@@ -3174,7 +5204,6 @@ async function loadUsers() {
             usersTableBody.appendChild(row);
         });
         
-        // Agregar event listeners a los botones de usuario
         attachUserEventListeners();
     } catch (error) {
         console.error('Error al cargar usuarios:', error);
@@ -3182,7 +5211,6 @@ async function loadUsers() {
 }
 
 function attachUserEventListeners() {
-    // Botón de ver usuario
     document.querySelectorAll('.view-user').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const id = e.currentTarget.getAttribute('data-id');
@@ -3190,25 +5218,23 @@ function attachUserEventListeners() {
         });
     });
     
-    // Botón de editar usuario
     document.querySelectorAll('.edit-user').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.currentTarget.getAttribute('data-id');
-            
-            // Verificar contraseña antes de editar
+            // Primero verificamos la contraseña
             const isVerified = await verifySecurityPassword("editar este usuario");
             if (isVerified) {
+                passwordVerified = true;
+                currentAction = 'edit';
+                // Luego abrimos el modal de edición
                 editUser(id);
             }
         });
     });
     
-    // Botón de eliminar usuario
     document.querySelectorAll('.delete-user').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.currentTarget.getAttribute('data-id');
-            
-            // Verificar contraseña antes de eliminar
             const isVerified = await verifySecurityPassword("eliminar este usuario");
             if (isVerified) {
                 deleteUserFromDB(id);
@@ -3217,7 +5243,6 @@ function attachUserEventListeners() {
     });
 }
 
-// Función para ver detalles de usuario
 async function viewUser(id) {
     try {
         const response = await fetch(`/api/users/${id}`);
@@ -3231,7 +5256,6 @@ async function viewUser(id) {
     }
 }
 
-// Función para editar usuario
 async function editUser(id) {
     try {
         const response = await fetch(`/api/users/${id}`);
@@ -3255,7 +5279,6 @@ async function editUser(id) {
     }
 }
 
-// Función para eliminar usuario
 async function deleteUserFromDB(id) {
     if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
         try {
@@ -3277,7 +5300,6 @@ async function deleteUserFromDB(id) {
     }
 }
 
-// Guardar usuario (nuevo o editado)
 document.getElementById('saveUser').addEventListener('click', async function() {
     const userId = document.getElementById('userId').value;
     const name = document.getElementById('userName').value;
@@ -3286,34 +5308,31 @@ document.getElementById('saveUser').addEventListener('click', async function() {
     const role = document.getElementById('userRole').value;
     const status = document.getElementById('userStatus').value;
     
-    // Validaciones
     if (!name || !email || !role || !status) {
         alert('Por favor, complete todos los campos obligatorios.');
         return;
     }
     
-    // Validación de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         alert('Por favor, ingrese un email válido.');
         return;
     }
     
-    // Si es un nuevo usuario, validar la contraseña
     if (!userId && !password) {
         alert('Por favor, ingrese una contraseña para el nuevo usuario.');
         return;
     }
     
-    // Si es edición de usuario existente, verificar contraseña de seguridad
-    if (userId) {
+    // Solo verificar contraseña si estamos editando y no se ha verificado previamente
+    if (userId && currentAction === 'edit' && !passwordVerified) {
         const isVerified = await verifySecurityPassword("guardar los cambios del usuario");
         if (!isVerified) {
-            return; // No continuar si la contraseña es incorrecta
+            return;
         }
+        passwordVerified = true;
     }
     
-    // Mostrar indicador de carga
     document.getElementById('saveUserText').classList.add('d-none');
     document.getElementById('saveUserSpinner').classList.remove('d-none');
     this.disabled = true;
@@ -3345,31 +5364,35 @@ document.getElementById('saveUser').addEventListener('click', async function() {
         await loadUsers();
         await updateDashboardStats();
         
-        // Cerrar modal y resetear formulario
         bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
         document.getElementById('userForm').reset();
         document.getElementById('userId').value = '';
+        
+        // Resetear las variables de verificación
+        passwordVerified = false;
+        currentAction = '';
         
         alert('Usuario guardado correctamente');
     } catch (error) {
         console.error('Error al guardar usuario:', error);
         alert('Error al guardar el usuario: ' + error.message);
     } finally {
-        // Ocultar indicador de carga
         document.getElementById('saveUserText').classList.remove('d-none');
         document.getElementById('saveUserSpinner').classList.add('d-none');
         this.disabled = false;
     }
 });
 
-// Cuando se cierra el modal, resetear el formulario
 document.getElementById('userModal').addEventListener('hidden.bs.modal', function() {
     document.getElementById('userForm').reset();
     document.getElementById('userId').value = '';
     document.getElementById('userModalLabel').textContent = 'Agregar Nuevo Usuario';
+    
+    // Resetear las variables de verificación cuando se cierra el modal
+    passwordVerified = false;
+    currentAction = '';
 });
 
-// Botón de actualizar usuarios
 const refreshUsersBtn = document.getElementById('refreshUsers');
 if (refreshUsersBtn) {
     refreshUsersBtn.addEventListener('click', function() {
@@ -3382,7 +5405,6 @@ if (refreshUsersBtn) {
             
             async function initApp() {
                 try {
-                    // Inicializar la interfaz
                     updateDashboardStats();
                     renderRecentOrders();
                     renderPopularProducts();
@@ -3396,7 +5418,6 @@ if (refreshUsersBtn) {
                 }
             }
             
-            // Iniciar la aplicación
             initApp();
         });
     </script>

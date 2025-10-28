@@ -4,9 +4,526 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categorías - Fashion Boutique</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h1 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        button.danger {
+            background: #e74c3c;
+        }
+        button.danger:hover {
+            background: #c0392b;
+        }
+        button.success {
+            background: #27ae60;
+        }
+        button.success:hover {
+            background: #219a52;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #555;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .status-active {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .status-inactive {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .actions button {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        .subcategory-section {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Gestión de Categorías</h1>
-    <p>Contenido de la sección de categorías...</p>
+    <div class="container">
+        <h1>🏷️ Gestión de Categorías</h1>
+        
+        <!-- Mensajes -->
+        <div id="message" style="display: none;"></div>
+
+        <!-- Formulario para nueva categoría -->
+        <div class="card">
+            <h3>➕ Agregar Nueva Categoría</h3>
+            <form id="categoryForm">
+                <div class="form-group">
+                    <label for="nameCategory">Nombre de la categoría *</label>
+                    <input type="text" id="nameCategory" required placeholder="Ej: Ropa de Mujer">
+                </div>
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <textarea id="description" placeholder="Descripción opcional de la categoría..."></textarea>
+                </div>
+                <button type="submit" class="success">💾 Guardar Categoría</button>
+            </form>
+        </div>
+
+        <!-- Lista de categorías -->
+        <div class="card">
+            <h3>📋 Categorías Existentes</h3>
+            <div id="categoriesList">
+                <p>⏳ Cargando categorías...</p>
+            </div>
+        </div>
+
+        <!-- Gestión de subcategorías -->
+        <div class="card">
+            <h3>📂 Gestión de Subcategorías</h3>
+            <div id="subcategoriesSection">
+                <p>👆 Selecciona una categoría para gestionar sus subcategorías</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentCategoryId = null;
+        let currentCategoryName = '';
+
+        // Mostrar mensaje
+        function showMessage(text, type = 'error') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = type;
+            messageDiv.style.display = 'block';
+            setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+        }
+
+        // Cargar categorías
+        async function loadCategories() {
+            try {
+                const response = await fetch('/categories/api/categories');
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderCategories(data.categories);
+                } else {
+                    showMessage('❌ Error al cargar categorías: ' + data.error);
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message);
+            }
+        }
+
+        // Renderizar categorías
+        function renderCategories(categories) {
+            const container = document.getElementById('categoriesList');
+            
+            if (categories.length === 0) {
+                container.innerHTML = '<p>📭 No hay categorías registradas</p>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Productos</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            categories.forEach(cat => {
+                html += `
+                    <tr>
+                        <td><strong>${cat.nameCategory}</strong></td>
+                        <td>${cat.product_count} productos</td>
+                        <td class="status-${cat.status.toLowerCase()}">${cat.status}</td>
+                        <td class="actions">
+                            <button onclick="selectCategory(${cat.idCategory}, '${cat.nameCategory}')" class="success">
+                                📂 Subcategorías
+                            </button>
+                            <button onclick="toggleCategoryStatus(${cat.idCategory})" class="${cat.status === 'Activa' ? 'danger' : 'success'}">
+                                ${cat.status === 'Activa' ? '❌ Desactivar' : '✅ Activar'}
+                            </button>
+                            <button onclick="deleteCategory(${cat.idCategory})" ${cat.product_count > 0 ? 'disabled' : ''} class="danger">
+                                🗑️ Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Seleccionar categoría para subcategorías
+        async function selectCategory(categoryId, categoryName) {
+            currentCategoryId = categoryId;
+            currentCategoryName = categoryName;
+            await loadSubcategories(categoryId);
+        }
+
+        // Cargar subcategorías
+        async function loadSubcategories(categoryId) {
+            try {
+                const response = await fetch(`/categories/api/categories/${categoryId}/subcategories`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderSubcategories(data.subcategories);
+                } else {
+                    showMessage('❌ Error al cargar subcategorías: ' + data.error);
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message);
+            }
+        }
+
+        // Renderizar subcategorías
+        function renderSubcategories(subcategories) {
+            const container = document.getElementById('subcategoriesSection');
+            
+            let html = `
+                <div class="subcategory-section">
+                    <h4>📁 Subcategorías de: <strong>${currentCategoryName}</strong></h4>
+                    
+                    <form id="subcategoryForm">
+                        <input type="hidden" id="idCategory" value="${currentCategoryId}">
+                        <div class="form-group">
+                            <label for="nameSubcategory">Nombre de la subcategoría *</label>
+                            <input type="text" id="nameSubcategory" required placeholder="Ej: Vestidos, Blusas, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="subcategoryDescription">Descripción (opcional)</label>
+                            <textarea id="subcategoryDescription" placeholder="Descripción de la subcategoría..."></textarea>
+                        </div>
+                        <button type="submit" class="success">➕ Agregar Subcategoría</button>
+                    </form>
+            `;
+
+            if (subcategories.length === 0) {
+                html += '<p style="margin-top: 20px;">📭 No hay subcategorías para esta categoría</p>';
+            } else {
+                html += `
+                    <div style="margin-top: 30px;">
+                        <h5>📋 Subcategorías Existentes</h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                subcategories.forEach(sub => {
+                    html += `
+                        <tr>
+                            <td>${sub.nameSubcategory}</td>
+                            <td class="status-${sub.status.toLowerCase()}">${sub.status}</td>
+                            <td class="actions">
+                                <button onclick="toggleSubcategoryStatus(${sub.idSubcategory})" class="${sub.status === 'Activa' ? 'danger' : 'success'}">
+                                    ${sub.status === 'Activa' ? '❌ Desactivar' : '✅ Activar'}
+                                </button>
+                                <button onclick="deleteSubcategory(${sub.idSubcategory})" class="danger">
+                                    🗑️ Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                html += '</tbody></table></div>';
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Agregar evento al formulario de subcategoría
+            document.getElementById('subcategoryForm').addEventListener('submit', handleSubcategorySubmit);
+        }
+
+        // Manejar envío de categoría
+        document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                nameCategory: document.getElementById('nameCategory').value,
+                description: document.getElementById('description').value,
+                status: 'Activa'
+            };
+
+            try {
+                const response = await fetch('/categories/api/categories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Categoría creada correctamente', 'success');
+                    document.getElementById('categoryForm').reset();
+                    loadCategories();
+                } else {
+                    showMessage('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message);
+            }
+        });
+
+        // Manejar envío de subcategoría
+        async function handleSubcategorySubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                idCategory: currentCategoryId,
+                nameSubcategory: document.getElementById('nameSubcategory').value,
+                description: document.getElementById('subcategoryDescription').value,
+                status: 'Activa'
+            };
+
+            try {
+                const response = await fetch('/categories/api/subcategories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage('✅ Subcategoría creada correctamente', 'success');
+                    document.getElementById('subcategoryForm').reset();
+                    loadSubcategories(currentCategoryId);
+                } else {
+                    showMessage('❌ Error: ' + data.error);
+                }
+            } catch (error) {
+                showMessage('❌ Error de conexión: ' + error.message);
+            }
+        }
+
+        // Funciones para cambiar estado de categoría
+        async function toggleCategoryStatus(categoryId) {
+            if (confirm('¿Estás seguro de cambiar el estado de esta categoría?')) {
+                try {
+                    const response = await fetch(`/categories/api/categories/${categoryId}/status`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showMessage(`✅ ${data.message}`, 'success');
+                        loadCategories();
+                        // Recargar subcategorías si esta era la categoría seleccionada
+                        if (currentCategoryId === categoryId) {
+                            loadSubcategories(categoryId);
+                        }
+                    } else {
+                        showMessage('❌ Error: ' + data.error);
+                    }
+                } catch (error) {
+                    showMessage('❌ Error de conexión: ' + error.message);
+                }
+            }
+        }
+
+        // Funciones para cambiar estado de subcategoría
+        async function toggleSubcategoryStatus(subcategoryId) {
+            if (confirm('¿Estás seguro de cambiar el estado de esta subcategoría?')) {
+                try {
+                    const response = await fetch(`/categories/api/subcategories/${subcategoryId}/status`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showMessage(`✅ ${data.message}`, 'success');
+                        loadSubcategories(currentCategoryId);
+                    } else {
+                        showMessage('❌ Error: ' + data.error);
+                    }
+                } catch (error) {
+                    showMessage('❌ Error de conexión: ' + error.message);
+                }
+            }
+        }
+
+        // Funciones para eliminar categoría
+        async function deleteCategory(categoryId) {
+            if (confirm('¿Estás seguro de eliminar esta categoría? Esta acción no se puede deshacer.')) {
+                try {
+                    const response = await fetch(`/categories/api/categories/${categoryId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showMessage('✅ Categoría eliminada correctamente', 'success');
+                        loadCategories();
+                        // Limpiar sección de subcategorías si se eliminó la categoría seleccionada
+                        if (currentCategoryId === categoryId) {
+                            document.getElementById('subcategoriesSection').innerHTML = 
+                                '<p>👆 Selecciona una categoría para gestionar sus subcategorías</p>';
+                            currentCategoryId = null;
+                        }
+                    } else {
+                        showMessage('❌ Error: ' + data.error);
+                    }
+                } catch (error) {
+                    showMessage('❌ Error de conexión: ' + error.message);
+                }
+            }
+        }
+
+        // Funciones para eliminar subcategoría
+        async function deleteSubcategory(subcategoryId) {
+            if (confirm('¿Estás seguro de eliminar esta subcategoría? Esta acción no se puede deshacer.')) {
+                try {
+                    const response = await fetch(`/categories/api/subcategories/${subcategoryId}`, {
+                        method: 'DELETE'
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showMessage('✅ Subcategoría eliminada correctamente', 'success');
+                        loadSubcategories(currentCategoryId);
+                    } else {
+                        showMessage('❌ Error: ' + data.error);
+                    }
+                } catch (error) {
+                    showMessage('❌ Error de conexión: ' + error.message);
+                }
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', loadCategories);
+    </script>
 </body>
 </html>

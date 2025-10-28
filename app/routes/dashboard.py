@@ -88,8 +88,8 @@ def get_products():
             'price': float(product.price),
             'stock': product.stock,
             'status': product.status,
-            'description': product.description or '',  # AÑADIR DESCRIPCIÓN
-            'image': product.image or f'https://via.placeholder.com/250x300/f8f9fa/000?text={product.nameProduct}'  # AÑADIR IMAGEN
+            'description': product.description or '',
+            'image': product.image or f'https://via.placeholder.com/250x300/f8f9fa/000?text={product.nameProduct}'
         } for product in products])
     except Exception as e:
         print(f"Error obteniendo productos: {e}")
@@ -108,7 +108,7 @@ def add_product():
             stock=data['stock'],
             status=data['status'],
             description=data.get('description', ''),
-            image=data.get('image', '')  # AÑADIR IMAGEN
+            image=data.get('image', '')
         )
         db.session.add(new_product)
         db.session.commit()
@@ -132,7 +132,7 @@ def update_product(product_id):
         product.status = data['status']
         if 'description' in data:
             product.description = data['description']
-        if 'image' in data:  # ACTUALIZAR IMAGEN
+        if 'image' in data:
             product.image = data['image']
         
         db.session.commit()
@@ -155,7 +155,7 @@ def delete_product(product_id):
         return jsonify({'error': str(e)}), 500
 
 # ==============================================
-# RUTAS PARA GESTIÓN DE USUARIOS - COMPLETAS
+# RUTAS PARA GESTIÓN DE USUARIOS
 # ==============================================
 
 @dashboard_bp.route('/api/users')
@@ -279,51 +279,6 @@ def delete_user(user_id):
 # RUTAS EXISTENTES (MANTENER)
 # ==============================================
 
-@dashboard_bp.route('/api/categories')
-@login_required
-def get_categories():
-    try:
-        from app.models1 import Category
-        categories = Category.query.all()
-        return jsonify([{
-            'id': category.idCategory,
-            'name': category.name,
-            'description': category.description,
-            'products_count': category.products_count if hasattr(category, 'products_count') else 0,
-            'status': category.status
-        } for category in categories])
-    except Exception as e:
-        print(f"Error obteniendo categorías: {e}")
-        # Datos de ejemplo si hay error o la tabla no existe
-        return jsonify([
-            {'id': 'C001', 'name': 'Vestidos', 'description': 'Vestidos para mujer', 'products_count': 56, 'status': 'Activa'},
-            {'id': 'C002', 'name': 'Pantalones', 'description': 'Pantalones de moda', 'products_count': 42, 'status': 'Activa'},
-            {'id': 'C003', 'name': 'Camisas', 'description': 'Camisas elegantes', 'products_count': 38, 'status': 'Activa'}
-        ])
-
-@dashboard_bp.route('/api/categories', methods=['POST'])
-@login_required
-def add_category():
-    try:
-        from app.models1 import Category
-        data = request.get_json()
-        
-        # Generar ID automático si no se proporciona
-        category_id = data.get('id', f'C{str(Category.query.count() + 1).zfill(3)}')
-        
-        new_category = Category(
-            idCategory=category_id,
-            name=data['name'],
-            description=data.get('description', ''),
-            status=data.get('status', 'Activa')
-        )
-        db.session.add(new_category)
-        db.session.commit()
-        return jsonify({'message': 'Categoría agregada correctamente'})
-    except Exception as e:
-        print(f"Error agregando categoría: {e}")
-        return jsonify({'error': str(e)}), 500
-
 @dashboard_bp.route('/api/orders')
 @login_required
 def get_orders():
@@ -360,7 +315,7 @@ def get_sales_report():
                 {'name': 'Pantalones', 'sales': 4200.50},
                 {'name': 'Camisas', 'sales': 4300.00}
             ],
-            'sales_trend': [1200, 1900, 3000, 2500, 2800, 3200]  # Últimos 6 meses
+            'sales_trend': [1200, 1900, 3000, 2500, 2800, 3200]
         })
     except Exception as e:
         print(f"Error generando reporte: {e}")
@@ -370,7 +325,6 @@ def get_sales_report():
 @login_required
 def get_config():
     try:
-        # Aquí iría la lógica para obtener configuración
         return jsonify({
             'store_name': 'Fashion Boutique',
             'currency': 'MXN',

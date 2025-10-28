@@ -26,7 +26,6 @@
             line-height: 1.6;
         }
 
-        /* Navbar Elegante */
         .navbar {
             background-color: #ffffff;
             box-shadow: 0 2px 20px rgba(0,0,0,0.08);
@@ -57,7 +56,6 @@
             font-weight: 600;
         }
 
-        /* Contenedor Principal */
         .cart-container {
             min-height: 70vh;
             margin-top: 2rem;
@@ -86,7 +84,6 @@
             background: var(--primary-black);
         }
 
-        /* Tarjetas de Productos */
         .cart-item-card {
             background: #ffffff;
             border: 1px solid var(--border-gray);
@@ -135,7 +132,6 @@
             color: var(--primary-black);
         }
 
-        /* Controles de Cantidad */
         .quantity-controls {
             display: flex;
             align-items: center;
@@ -170,7 +166,6 @@
             font-weight: 500;
         }
 
-        /* Botones */
         .btn {
             border-radius: 0;
             font-weight: 500;
@@ -221,7 +216,6 @@
             font-size: 0.8rem;
         }
 
-        /* Panel de Resumen */
         .summary-card {
             background: #ffffff;
             border: 1px solid var(--border-gray);
@@ -260,7 +254,6 @@
             margin-top: 1rem;
         }
 
-        /* Carrito Vacío */
         .empty-cart {
             padding: 4rem 2rem;
             text-align: center;
@@ -288,7 +281,6 @@
             font-size: 1.1rem;
         }
 
-        /* Badge del Carrito */
         .cart-badge {
             background: var(--primary-black);
             color: white;
@@ -304,7 +296,6 @@
             right: -5px;
         }
 
-        /* Footer */
         .footer {
             background: var(--primary-black);
             color: white;
@@ -312,13 +303,161 @@
             margin-top: 4rem;
         }
 
-        .footer p {
-            margin: 0;
-            font-weight: 300;
+        .payment-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Responsive */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-card {
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 0;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+
+        .payment-card.active {
+            border-color: var(--primary-black);
+            box-shadow: 0 0 0 2px var(--primary-black);
+        }
+
+        .payment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: var(--primary-black);
+        }
+
+        .payment-badge {
+            background: var(--primary-black);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-black);
+        }
+
+        .payment-description {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            margin-bottom: 0;
+        }
+
+        .payment-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-gray);
+            display: none;
+        }
+
+        .payment-details.active {
+            display: block;
+        }
+
+        .qr-code {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light-gray);
+            margin-top: 1rem;
+        }
+
+        .qr-placeholder {
+            width: 150px;
+            height: 150px;
+            background: var(--medium-gray);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-gray);
+        }
+
+        .payment-instructions {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .modal-content {
+            border-radius: 0;
+            border: none;
+        }
+
+        .modal-header {
+            background: var(--primary-black);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0;
+            border: 1px solid var(--border-gray);
+            padding: 0.75rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-black);
+            box-shadow: 0 0 0 0.2rem rgba(26, 26, 26, 0.25);
+        }
+
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+
         @media (max-width: 768px) {
             .cart-item-img {
                 width: 80px;
@@ -337,6 +476,10 @@
                 position: static;
                 margin-top: 2rem;
             }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 576px) {
@@ -354,7 +497,6 @@
             }
         }
 
-        /* Animaciones */
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
@@ -364,7 +506,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estados de hover mejorados */
         .action-btn {
             transition: all 0.3s ease;
             border: none;
@@ -378,7 +519,6 @@
             transform: scale(1.1);
         }
 
-        /* Iconos */
         .icon-lg {
             font-size: 1.2rem;
         }
@@ -388,25 +528,25 @@
     <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('auth.home') }}">
+            <a class="navbar-brand" href="/">
                 <i class="fas fa-store me-2"></i>FASHION BOUTIQUE
             </a>
             
             <div class="d-flex align-items-center">
-                <a class="nav-link mx-2" href="{{ url_for('auth.home') }}">
+                <a class="nav-link mx-2" href="/">
                     <i class="fas fa-home me-1"></i> Inicio
                 </a>
                 {% if current_user.is_authenticated %}
-                <a class="nav-link mx-2" href="{{ url_for('users.profile') }}">
+                <a class="nav-link mx-2" href="/profile">
                     <i class="fas fa-user me-1"></i> Perfil
                 </a>
-                <a class="nav-link mx-2 active position-relative" href="{{ url_for('cart.view_cart') }}">
+                <a class="nav-link mx-2 active position-relative" href="/cart">
                     <i class="fas fa-shopping-cart me-1"></i> Carrito
                     {% if cart_items|length > 0 %}
                         <span class="cart-badge">{{ cart_items|length }}</span>
                     {% endif %}
                 </a>
-                <a class="nav-link mx-2" href="{{ url_for('auth.logout') }}">
+                <a class="nav-link mx-2" href="/auth/logout">
                     <i class="fas fa-sign-out-alt me-1"></i> Salir
                 </a>
                 {% endif %}
@@ -460,7 +600,7 @@
 
                 <!-- Botones de acción -->
                 <div class="d-flex gap-2 mt-4">
-                    <a href="{{ url_for('auth.home') }}" class="btn btn-outline-dark">
+                    <a href="/" class="btn btn-outline-dark">
                         <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
                     </a>
                     <button class="btn btn-outline-dark" onclick="clearCart()">
@@ -488,7 +628,7 @@
                         <strong>${{ "%.2f"|format(total) }}</strong>
                     </div>
                     
-                    <button class="btn btn-dark w-100 btn-lg mt-4" onclick="checkout()">
+                    <button class="btn btn-dark w-100 btn-lg mt-4" onclick="showPaymentOptions()">
                         <i class="fas fa-credit-card me-2"></i> Proceder al Pago
                     </button>
                     
@@ -500,6 +640,133 @@
                 </div>
             </div>
         </div>
+
+        <!-- Sección de Métodos de Pago (inicialmente oculta) -->
+        <div class="payment-section" id="paymentSection" style="display: none;">
+            <h3 class="payment-title">
+                <i class="fas fa-money-bill-wave me-2"></i>Métodos de Pago
+            </h3>
+            
+            <div class="payment-options">
+                <!-- Tarjeta de crédito/débito -->
+                <div class="payment-card" onclick="selectPaymentMethod('card')">
+                    <div class="payment-card-header">
+                        <div class="payment-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <span class="payment-badge">Tu llave</span>
+                    </div>
+                    <h4 class="payment-name">Tarjeta de Crédito/Débito</h4>
+                    <p class="payment-description">Pago seguro con tu tarjeta</p>
+                    <div class="payment-details" id="cardDetails">
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Número de tarjeta</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="expiryDate" class="form-label">Fecha de vencimiento</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardholderName" class="form-label">Nombre del titular</label>
+                            <input type="text" class="form-control" id="cardholderName" placeholder="Como aparece en la tarjeta">
+                        </div>
+                        <button class="btn btn-dark w-100" onclick="processPayment('card')">
+                            <i class="fas fa-lock me-2"></i> Pagar ${{ "%.2f"|format(total) }}
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- PSE -->
+                <div class="payment-card" onclick="selectPaymentMethod('pse')">
+                    <div class="payment-card-header">
+                        <div class="payment-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <span class="payment-badge">PSE</span>
+                    </div>
+                    <h4 class="payment-name">Pago en Línea (PSE)</h4>
+                    <p class="payment-description">Paga directamente desde tu banco</p>
+                    <div class="payment-details" id="pseDetails">
+                        <div class="mb-3">
+                            <label for="bankSelect" class="form-label">Selecciona tu banco</label>
+                            <select class="form-select" id="bankSelect">
+                                <option value="">-- Selecciona un banco --</option>
+                                <option value="daviplata">Daviplata</option>
+                                <option value="bancolombia">Bancolombia</option>
+                                <option value="transfiya">Transfiya</option>
+                                <option value="nequi">Nequi</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pseEmail" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="pseEmail" placeholder="tu@email.com">
+                        </div>
+                        <button class="btn btn-dark w-100" onclick="processPayment('pse')">
+                            <i class="fas fa-university me-2"></i> Pagar ${{ "%.2f"|format(total) }}
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- QR -->
+                <div class="payment-card" onclick="selectPaymentMethod('qr')">
+                    <div class="payment-card-header">
+                        <div class="payment-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <span class="payment-badge">Nuevo!</span>
+                    </div>
+                    <h4 class="payment-name">Pago con QR</h4>
+                    <p class="payment-description">Escanea y paga fácilmente</p>
+                    <div class="payment-details" id="qrDetails">
+                        <div class="qr-code">
+                            <div class="qr-placeholder">
+                                <i class="fas fa-qrcode fa-3x"></i>
+                            </div>
+                            <p class="payment-instructions mt-2">
+                                Escanea este código QR con tu app bancaria para completar el pago
+                            </p>
+                        </div>
+                        <button class="btn btn-dark w-100 mt-3" onclick="processPayment('qr')">
+                            <i class="fas fa-check me-2"></i> Confirmar Pago
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Efectivo -->
+                <div class="payment-card" onclick="selectPaymentMethod('cash')">
+                    <div class="payment-card-header">
+                        <div class="payment-icon">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                    </div>
+                    <h4 class="payment-name">Pago en Efectivo</h4>
+                    <p class="payment-description">Paga al recibir tu pedido</p>
+                    <div class="payment-details" id="cashDetails">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Podrás pagar en efectivo cuando recibas tu pedido. 
+                            El monto a pagar es: <strong>${{ "%.2f"|format(total) }}</strong>
+                        </div>
+                        <button class="btn btn-dark w-100" onclick="showShippingModal()">
+                            <i class="fas fa-truck me-2"></i> Confirmar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-dark" onclick="hidePaymentOptions()">
+                    <i class="fas fa-arrow-left me-2"></i> Volver al Carrito
+                </button>
+            </div>
+        </div>
         {% else %}
         <!-- Carrito vacío -->
         <div class="empty-cart fade-in">
@@ -508,11 +775,112 @@
             </div>
             <h3 class="empty-cart-title">Tu carrito está vacío</h3>
             <p class="empty-cart-text">Descubre nuestra colección y añade tus productos favoritos</p>
-            <a href="{{ url_for('auth.home') }}" class="btn btn-dark btn-lg">
+            <a href="/" class="btn btn-dark btn-lg">
                 <i class="fas fa-shopping-bag me-2"></i> Explorar Productos
             </a>
         </div>
         {% endif %}
+    </div>
+
+    <!-- Modal de Información de Envío -->
+    <div class="modal fade" id="shippingModal" tabindex="-1" aria-labelledby="shippingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shippingModalLabel">
+                        <i class="fas fa-truck me-2"></i>Información de Envío
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="shippingForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label required-field">Nombre completo</label>
+                                <input type="text" class="form-control" id="fullName" required
+                                       placeholder="Ej: María González López">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label required-field">Teléfono</label>
+                                <input type="tel" class="form-control" id="phone" required
+                                       placeholder="Ej: +57 300 123 4567">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="tu@email.com" value="{{ current_user.emailUser }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label required-field">Dirección principal</label>
+                            <input type="text" class="form-control" id="address" required
+                                   placeholder="Ej: Calle 123 #45-67">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address2" class="form-label">Dirección secundaria (opcional)</label>
+                            <input type="text" class="form-control" id="address2"
+                                   placeholder="Ej: Apartamento 201, Torre 2">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="city" class="form-label required-field">Ciudad</label>
+                                <input type="text" class="form-control" id="city" required
+                                       placeholder="Ej: Bogotá">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="state" class="form-label">Departamento/Estado</label>
+                                <input type="text" class="form-control" id="state"
+                                       placeholder="Ej: Cundinamarca">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="zipCode" class="form-label">Código postal</label>
+                                <input type="text" class="form-control" id="zipCode"
+                                       placeholder="Ej: 110111">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">País</label>
+                                <select class="form-select" id="country">
+                                    <option value="Colombia" selected>Colombia</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Chile">Chile</option>
+                                    <option value="México">México</option>
+                                    <option value="Perú">Perú</option>
+                                    <option value="España">España</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="instructions" class="form-label">Instrucciones de entrega</label>
+                            <textarea class="form-control" id="instructions" rows="3"
+                                      placeholder="Ej: Llamar antes de llegar, Dejar en portería, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="saveAddress">
+                            <label class="form-check-label" for="saveAddress">
+                                Guardar esta dirección para futuros pedidos
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-dark" onclick="submitCashOrder()">
+                        <i class="fas fa-check me-2"></i> Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -525,6 +893,15 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Variables globales
+        let selectedPaymentMethod = '';
+        let shippingModal = null;
+
+        // Inicializar modal cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            shippingModal = new bootstrap.Modal(document.getElementById('shippingModal'));
+        });
+
         // Función para mostrar notificación elegante
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
@@ -565,7 +942,7 @@
             }, 4000);
         }
         
-        // Función para actualizar cantidad
+        // Función para actualizar cantidad - CORREGIDA
         async function updateQuantity(itemId, newQuantity) {
             if (newQuantity < 1) {
                 removeFromCart(itemId);
@@ -573,7 +950,7 @@
             }
             
             try {
-                const response = await fetch('{{ url_for("cart.update_cart_item") }}', {
+                const response = await fetch('/cart/api/update', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -597,14 +974,14 @@
             }
         }
         
-        // Función para eliminar item
+        // Función para eliminar item - CORREGIDA
         async function removeFromCart(itemId) {
             if (!confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')) {
                 return;
             }
             
             try {
-                const response = await fetch('{{ url_for("cart.remove_from_cart") }}', {
+                const response = await fetch('/cart/api/remove', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -630,14 +1007,14 @@
             }
         }
         
-        // Función para vaciar carrito
+        // Función para vaciar carrito - CORREGIDA
         async function clearCart() {
             if (!confirm('¿Estás seguro de que quieres vaciar tu carrito?')) {
                 return;
             }
             
             try {
-                const response = await fetch('{{ url_for("cart.clear_cart") }}', {
+                const response = await fetch('/cart/api/clear', {
                     method: 'POST'
                 });
                 
@@ -657,10 +1034,217 @@
             }
         }
         
-        // Función para checkout
-        function checkout() {
-            showNotification('¡Funcionalidad de pago en desarrollo! Pronto podrás completar tu compra.', 'warning');
+        // Funciones para mostrar/ocultar opciones de pago
+        function showPaymentOptions() {
+            document.getElementById('paymentSection').style.display = 'block';
+            window.scrollTo({
+                top: document.getElementById('paymentSection').offsetTop - 100,
+                behavior: 'smooth'
+            });
         }
+        
+        function hidePaymentOptions() {
+            document.getElementById('paymentSection').style.display = 'none';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Función para seleccionar método de pago
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Remover clase active de todas las tarjetas
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Ocultar todos los detalles
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Activar la tarjeta seleccionada
+            const selectedCard = event.currentTarget;
+            selectedCard.classList.add('active');
+            
+            // Mostrar detalles del método seleccionado
+            const detailsId = `${method}Details`;
+            document.getElementById(detailsId).classList.add('active');
+        }
+        
+        // Función para mostrar modal de envío
+        function showShippingModal() {
+            if (!selectedPaymentMethod) {
+                showNotification('Por favor selecciona un método de pago', 'warning');
+                return;
+            }
+            
+            if (selectedPaymentMethod === 'cash') {
+                shippingModal.show();
+            } else {
+                processPayment(selectedPaymentMethod);
+            }
+        }
+        
+        // Función para enviar pedido en efectivo con datos de envío - CORREGIDA
+        async function submitCashOrder() {
+            // Validar formulario
+            const form = document.getElementById('shippingForm');
+            const requiredFields = ['fullName', 'phone', 'address', 'city'];
+            let isValid = true;
+            
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            }
+            
+            if (!isValid) {
+                showNotification('Por favor completa todos los campos requeridos', 'warning');
+                return;
+            }
+            
+            // Recopilar datos de envío
+            const shippingData = {
+                full_name: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value || '{{ current_user.emailUser }}',
+                address: document.getElementById('address').value,
+                address2: document.getElementById('address2').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip_code: document.getElementById('zipCode').value,
+                country: document.getElementById('country').value,
+                instructions: document.getElementById('instructions').value
+            };
+            
+            try {
+                const response = await fetch('/cart/api/create_cash_order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        shipping_address: shippingData.address + ', ' + shippingData.city + ', ' + shippingData.country
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    shippingModal.hide();
+                    showNotification(data.message, 'success');
+                    
+                    // Redirigir a confirmación
+                    setTimeout(() => {
+                        window.location.href = '/cart/order/confirmation?order_id=' + data.order_id;
+                    }, 2000);
+                } else {
+                    showNotification(data.message, 'danger');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al crear el pedido', 'danger');
+            }
+        }
+        
+        // Función para procesar pago - CORREGIDA
+        async function processPayment(method) {
+            switch(method) {
+                case 'card':
+                    try {
+                        const response = await fetch('/cart/api/create_card_order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                payment_details: {
+                                    last_digits: '1234'
+                                }
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification(data.message, 'success');
+                            setTimeout(() => {
+                                window.location.href = '/cart/order/confirmation?order_id=' + data.order_id;
+                            }, 2000);
+                        } else {
+                            showNotification(data.message, 'danger');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showNotification('Error al procesar el pago con tarjeta', 'danger');
+                    }
+                    break;
+                    
+                case 'pse':
+                    try {
+                        const bank = document.getElementById('bankSelect').value;
+                        const email = document.getElementById('pseEmail').value;
+                        
+                        if (!bank) {
+                            showNotification('Por favor selecciona un banco', 'warning');
+                            return;
+                        }
+                        
+                        const response = await fetch('/cart/api/create_pse_order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                bank: bank,
+                                email: email
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification(data.message, 'success');
+                            setTimeout(() => {
+                                window.location.href = '/cart/order/confirmation?order_id=' + data.order_id;
+                            }, 2000);
+                        } else {
+                            showNotification(data.message, 'danger');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showNotification('Error al procesar el pago PSE', 'danger');
+                    }
+                    break;
+                    
+                case 'qr':
+                    showNotification('¡Esperando confirmación de pago por QR!', 'success');
+                    break;
+                    
+                case 'cash':
+                    // Para efectivo, ya manejado por showShippingModal
+                    break;
+            }
+        }
+
+        // Validación en tiempo real de campos requeridos
+        document.addEventListener('DOMContentLoaded', function() {
+            const requiredFields = document.querySelectorAll('#shippingForm [required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

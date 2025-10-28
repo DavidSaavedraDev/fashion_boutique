@@ -1,0 +1,22 @@
+{
+    "store": {
+        "name": "Fash",
+        "nit": "900.123.456-7",
+        "address": "Cra 45 #26-85, Medellín"
+    },
+    "billing": {
+        "dian_resolution": "18764000000001",
+        "invoice_prefix": "FACT",
+        "initial_number": 1
+    },
+    "printing": {
+        "auto_print": true,
+        "print_copy": true,
+        "paper_size": "Térmico 80mm"
+    },
+    "notifications": {
+        "low_stock": true,
+        "daily_sales": true,
+        "online_orders": false
+    }
+}

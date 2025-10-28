@@ -160,24 +160,44 @@ def create_app():
         db.session.rollback()
         return render_template('500.html'), 500
     
-    # ✅ CORREGIDO: Registrar blueprints con manejo de errores
+    # ✅ CORREGIDO: Registrar TODOS los blueprints con manejo de errores
     try:
         from app.routes.auth import bp as auth_bp
         from app.routes.users_route import bp as users_bp
         from app.routes.dashboard import dashboard_bp
         from app.routes.products import products_bp
         from app.routes.cart import cart_bp
+        from app.routes.admin import admin_bp
+        from app.routes.categories_routes import categories_bp  # ✅ AGREGADO: Blueprint de categorías
         
         app.register_blueprint(auth_bp)
         app.register_blueprint(users_bp)
         app.register_blueprint(dashboard_bp)
         app.register_blueprint(products_bp)
         app.register_blueprint(cart_bp)
+        app.register_blueprint(admin_bp)
+        app.register_blueprint(categories_bp, url_prefix='/categories')  # ✅ AGREGADO: Registrar blueprint de categorías
         
         print("✅ Todos los blueprints registrados correctamente")
         
     except ImportError as e:
         print(f"⚠️  Algunos blueprints no pudieron cargarse: {e}")
+        
+        # Intentar cargar blueprints individualmente
+        try:
+            from app.routes.auth import bp as auth_bp
+            app.register_blueprint(auth_bp)
+            print("✅ Blueprint de auth registrado")
+        except ImportError:
+            print("❌ No se pudo cargar auth_bp")
+            
+        try:
+            from app.routes.categories_routes import categories_bp
+            app.register_blueprint(categories_bp, url_prefix='/categories')
+            print("✅ Blueprint de categorías registrado")
+        except ImportError:
+            print("❌ No se pudo cargar categories_bp")
+            
     except Exception as e:
         print(f"⚠️  Error al registrar blueprints: {e}")
     

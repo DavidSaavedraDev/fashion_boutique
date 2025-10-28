@@ -78,8 +78,7 @@ def category_products_page(category_name):
     except Exception as e:
         return render_template('error404.html'), 404
 
-# ✅ RUTA: Página HTML de detalles del producto
-@products_bp.route('/producto/<int:product_id>')
+@products_bp.route('/product/<int:product_id>')  # ← CAMBIADO de 'producto' a 'product'
 def product_detail(product_id):
     """Página de detalles del producto (HTML)"""
     try:
